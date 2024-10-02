@@ -1,0 +1,229 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+  {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+        <li class="{{ message.tags }}">{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  <style>
+    .style {
+      background-color: azure;
+      border-radius: 16px;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+    }
+    .product-image {
+      width: 70px;
+      height: auto;
+    }
+    .product-container {
+      display: flex;
+      align-items: center;
+    }
+    .media-body {
+      margin-left: 10px;
+    }
+  </style>
+  <br />
+  <br />
+  <div class="container">
+    {% if cart_products %}
+      <!-- HERO SECTION -->
+      <section class="bg-light">
+        <div class="container">
+          <div class="row px-4 px-lg-5 align-items-center justify-content-center">
+            <div class="col-lg-6">
+              <h1 class="h2 text-uppercase mb-0 text-center">Cart</h1>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="py-5">
+        {% include 'partials/_messages.html' %}
+
+        <div class="row">
+          <div class="col-lg-8 mb-4 mb-lg-0">
+            <!-- CART TABLE -->
+            <div class="table-responsive mb-4 style">
+              <table class="table">
+                <thead class="bg-light">
+                  <tr>
+                    <th class="border-0" scope="col">
+                      <strong class="text-small text-uppercase">Product</strong>
+                    </th>
+                    <th class="border-0" scope="col">
+                      <strong class="text-small text-uppercase">Product Amount</strong>
+                    </th>
+                    <th class="border-0" scope="col">
+                      <strong class="text-small text-uppercase">Quantity</strong>
+                    </th>
+                    <th class="border-0" scope="col"></th>
+                    <th class="border-0" scope="col">
+                      <strong class="text-small text-uppercase">Total Amount</strong>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for cart_product in cart_products %}
+                    <tr>
+                      <td class="pl-0 border-0" scope="row">
+                        <div class="media product-container">
+                          {% if cart_product.gold_product %}
+                            {% with product=cart_product.gold_product %}
+                            <div class="d-flex flex-lg-row align-items-center" style="flex-direction: column;">
+                              {% if product.images.exists %}
+                                {% with first_image=product.images.first %}
+                                  <img class="img-fluid product-image" src="{{ first_image.image.url }}" alt="{{ product.title }}" />
+                                {% endwith %}
+                              {% else %}
+                                <img class="img-fluid product-image" src="{% static 'img/auspiciousoccasions.png' %}" alt="{{ product.title }}" />
+                              {% endif %}
+                              <div class="media-body">
+                                <strong class="h6"><a class="reset-anchor animsition-link" href="{% url 'store:product-detail' product.slug %}">{{ product.title }}</a></strong>
+                              </div>
+                            </div>
+                            {% endwith %}
+                          {% elif cart_product.silver_product %}
+                            {% with product=cart_product.silver_product %}
+                            <div class="d-flex flex-lg-row align-items-center" style="flex-direction: column;">
+                              {% if product.images.exists %}
+                                {% with first_image=product.images.first %}
+                                  <img class="img-fluid product-image" src="{{ first_image.image.url }}" alt="{{ product.title }}" />
+                                {% endwith %}
+                              {% else %}
+                                <img class="img-fluid product-image" src="{% static 'img/auspiciousoccasions.png' %}" alt="{{ product.title }}" />
+                              {% endif %}
+                              <div class="media-body">
+                                <strong class="h6"><a class="reset-anchor animsition-link" href="{% url 'store:product-detail' product.slug %}">{{ product.title }}</a></strong>
+                              </div>
+                            </div>
+                            {% endwith %}
+                          {% elif cart_product.diamond_product %}
+                            {% with product=cart_product.diamond_product %}
+                            <div class="d-flex flex-lg-row align-items-center" style="flex-direction: column;">
+                              {% if product.images.exists %}
+                                {% with first_image=product.images.first %}
+                                  <img class="img-fluid product-image" src="{{ first_image.image.url }}" alt="{{ product.title }}" />
+                                {% endwith %}
+                              {% else %}
+                                <img class="img-fluid product-image" src="{% static 'img/auspiciousoccasions.png' %}" alt="{{ product.title }}" />
+                              {% endif %}
+                              <div class="media-body">
+                                <strong class="h6"><a class="reset-anchor animsition-link" href="{% url 'store:product-detail' product.slug %}">{{ product.title }}</a></strong>
+                              </div>
+                            </div>
+                            {% endwith %}
+                          {% endif %}
+                        </div>
+                      </td>
+                      
+                      <td class="align-middle border-0">
+                        <p class="mb-0 small">
+                          ₹{{ cart_product.effective_price|floatformat:0 }}
+                        </p>
+                      </td>
+                      
+                      <td class="align-middle border-0">
+                        <div class="border d-flex align-items-center justify-content-between px-3">
+                          <span class="small text-uppercase text-gray headings-font-family">Quantity</span>
+                          <div class="quantity">
+                            <a href="{% url 'store:minus-cart' cart_product.id %}" class="dec-btn p-0 ml-2"><i class="fas fa-minus"></i></a>
+                            <input class="form-control form-control-sm border-0 shadow-0 p-0" type="text" value="{{ cart_product.quantity }}" readonly />
+                            <a href="{% url 'store:plus-cart' cart_product.id %}" class="inc-btn p-0"><i class="fas fa-plus"></i></a>
+                          </div>
+                        </div>
+                      </td>
+                      
+                      <td class="align-middle border-0">
+                        <a class="reset-anchor" href="{% url 'store:remove-cart' cart_product.id %}"><i class="fas fa-trash-alt small text-muted"></i></a>
+                      </td>
+                      
+                      <td class="align-middle border-0">
+                        <p class="mb-0 small">
+                          ₹{{ cart_product.total_price|floatformat:2 }}
+                        </p>
+                      </td>
+                      
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+
+            <!-- CART NAV -->
+            <div>
+              <div class="container">
+                <div class="row d-flex justify-content-around">
+                  <div class="col-12 col-lg-3 col-md-3 style border border-warning d-flex flex-column align-items-center justify-content-center" style="border-radius: 10px;">
+                    <i class="fa-solid fa-medal mt-3 mb-2" style="font-size: 40px;"></i>
+                    <h6 class="text-center">Purity Guaranteed<br /><p style="font-size:small;">on every online purchase</p></h6>
+                  </div>
+                  <div class="col-12 col-lg-3 col-md-3 mt-3 mt-lg-0 mt-md-0 style border border-warning d-flex flex-column align-items-center justify-content-center" style="border-radius: 10px;">
+                    <i class="fa-solid fa-truck mt-3 mb-2" style="font-size: 40px;"></i>
+                    <h6 class="text-center">Secure Delivery<br /><p style="font-size:small;">by our trusted partners</p></h6>
+                  </div>
+                  <div class="col-12 col-lg-3 col-md-3 mt-3 mt-lg-0 mt-md-0 style border border-warning d-flex flex-column align-items-center justify-content-center" style="border-radius: 10px;">
+                    <i class="fa-solid fa-credit-card mt-3 mb-2" style="font-size: 40px;"></i>
+                    <h6 class="text-center">Secure Payments<br /><p style="font-size:small;">on every online purchase</p></h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- ORDER TOTAL -->
+          <div class="col-lg-4">
+            <div class="card border-0.5 rounded-2 p-lg-4 style">
+              <div class="card-body">
+                <h5 class="text-uppercase mb-4">Cart total</h5>
+                <ul class="list-unstyled mb-0">
+                  <li class="border-bottom my-2"></li>
+                  <li class="d-flex align-items-center justify-content-between">
+                    <strong class="text-uppercase small font-weight-bold">Grand total</strong>
+                    <span class="text-muted small"><strong>₹{{ grand_total|floatformat:2 }}</strong></span>
+                  </li>
+                </ul><br />
+                <p>
+                  <strong>Select an Address for Checkout</strong>
+                </p>
+                <form method="GET" action="{% url 'store:checkout' %}">
+                  <div class="form-group">
+                      {% if addresses %}
+                          {% for address in addresses %}
+                              <div class="form-check">
+                                  <input class="form-check-input" type="radio" name="address" id="address{{ address.id }}" value="{{ address.id }}" required />
+                                  <label class="form-check-label" for="address{{ address.id }}">
+                                      {{ address.locality }}, {{ address.city }}, {{ address.state }}
+                                  </label>
+                              </div>
+                          {% endfor %}
+                      {% else %}
+                          
+                      {% endif %}
+                  </div>
+              
+                  {% if addresses %}
+                      <button type="submit" class="btn btn-outline-dark btn-block mt-4">Place your Order</button>
+                  {% else %}
+                      <a href="{% url 'store:address_view' %}" class="btn btn-outline-dark btn-block mt-4">Add Address</a>
+                  {% endif %}
+              </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    {% else %}
+      <div class="col-sm-12 empty-cart-cls text-center mb-5">
+        <img src="{% static 'images/empty-cart.png' %}" width="330" height="330" class="img-fluid mb-4 mr-3" /><br />
+        <a href="{% url 'store:home' %}"><button class="btn btn-warning"><i class="fas fa-long-arrow-alt-left mr-2"></i>Continue shopping</button></a>
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}

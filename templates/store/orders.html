@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content%}
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-12">
+          <h3 class="text-center">Orders</h3>
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Item</th>
+                        <th>Image</th>
+                        <th>Qty.</th>
+                        <th>Ordered Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if orders %}
+                        {% for order in orders %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>
+                                {% if order.gold_product %}
+                                    {{ order.gold_product.title }}
+                                {% elif order.silver_product %}
+                                    {{ order.silver_product.title }}
+                                {% elif order.diamond_product %}
+                                    {{ order.diamond_product.title }}
+                                {% else %}
+                                    Unknown Item
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if order.gold_product %}
+                                    {% if order.gold_product.images.exists %}
+                                        <img src="{{ order.gold_product.images.first.image.url }}" alt="{{ order.gold_product.title }}" class="img-fluid" style="width: 65px">
+                                    {% else %}
+                                        <img src="{% static 'images/default-image.png' %}" alt="Default Image" class="img-fluid" style="width: 65px">
+                                    {% endif %}
+                                {% elif order.silver_product %}
+                                    {% if order.silver_product.images.exists %}
+                                        <img src="{{ order.silver_product.images.first.image.url }}" alt="{{ order.silver_product.title }}" class="img-fluid" style="width: 65px">
+                                    {% else %}
+                                        <img src="{% static 'images/default-image.png' %}" alt="Default Image" class="img-fluid" style="width: 65px">
+                                    {% endif %}
+                                {% elif order.diamond_product %}
+                                    {% if order.diamond_product.images.exists %}
+                                        <img src="{{ order.diamond_product.images.first.image.url }}" alt="{{ order.diamond_product.title }}" class="img-fluid" style="width: 65px">
+                                    {% else %}
+                                        <img src="{% static 'images/default-image.png' %}" alt="Default Image" class="img-fluid" style="width: 65px">
+                                    {% endif %}
+                                {% else %}
+                                    <img src="{% static 'images/default-image.png' %}" alt="Default Image" class="img-fluid" style="width: 65px">
+                                {% endif %}
+                            </td>
+                            <td>{{ order.quantity }}</td>
+                            <td>{{ order.ordered_date|naturaltime }}</td>
+                            <td>
+                                {% if order.status == 'Pending' %}
+                                    <!-- Pending Status Style -->
+                                {% elif order.status == 'Accepted' %}
+                                    <div class="bg-light border border-primary">
+                                        <div class="p-3 bg-primary" style="width: 0"></div>
+                                    </div>
+                                {% elif order.status == 'Packed' %}
+                                    <div class="bg-light border border-primary">
+                                        <div class="p-3 bg-primary" style="width: 40%"></div>
+                                    </div>
+                                {% elif order.status == 'On The Way' %}
+                                    <div class="bg-light border border-primary">
+                                        <div class="p-3 bg-primary" style="width: 70%"></div>
+                                    </div>
+                                {% elif order.status == 'Delivered' %}
+                                    <div class="bg-light border border-primary">
+                                        <div class="p-3 bg-primary" style="width: 100%"></div>
+                                    </div>
+                                {% elif order.status == 'Cancelled' %}
+                                    <div class="bg-light border border-danger">
+                                        <div class="p-3 bg-danger" style="width: 100%"></div>
+                                    </div>
+                                {% endif %}
+                                {{ order.status }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center">No orders found</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock content %}

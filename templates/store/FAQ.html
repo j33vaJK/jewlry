@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content%}
+
+  <style>
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+.wrapper {
+  max-width: 75%;
+  margin: auto;
+}
+
+.wrapper > p,
+.wrapper > h1 {
+  margin: 1.5rem 0;
+  text-align: center;
+}
+
+.wrapper > h1 {
+  letter-spacing: 3px;
+}
+
+.accordion {
+  background-color: rgb(252, 237, 237);
+  color: rgba(0, 0, 0, 0.8);
+  cursor: pointer;
+  font-size: 1.2rem;
+  width: 100%;
+  padding: 2rem 2.5rem;
+  border: none;
+  outline: none;
+  transition: 0.4s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+}
+
+.accordion i {
+  font-size: 1.6rem;
+}
+
+.active,
+.accordion:hover {
+  background-color: #f1f7f5;
+}
+.pannel {
+  padding: 0 2rem 2.5rem 2rem;
+  background-color: rgb(255, 233, 233);
+  overflow: hidden;
+  background-color: #ffffff;
+  display: none;
+}
+.pannel p {
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 1.2rem;
+  line-height: 1.4;
+}
+
+.faq {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  margin: 10px 0;
+}
+.faq.active {
+  border: none;
+}
+.width{
+  width: 70%;
+  height: 50%;
+  margin-left: 200px;
+  margin-top: 9%;
+}
+h1{
+  text-align: center;
+  color: rgb(7, 43, 31);
+}
+  </style>
+  <body>
+    <div class="width">
+      <h1>Frequently Asked Questions</h1>
+      <div class="faq">
+        <button class="accordion">
+          Where are Subbiah Jewellery stores located?
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="pannel">
+          <p>
+            Subbiah Jewellery has five branches located within Trivandrum, offering a wide range of gold, diamond, and other jewelry items.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq">
+        <button class="accordion">
+          What are the store hours?
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="pannel">
+          <p>
+            Our stores are typically open from 10:00 AM to 8:00 PM, Monday through Saturday. Sunday timings may vary by location, so please check with your nearest branch for exact hours.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq">
+        <button class="accordion">
+          Does Subbiah Jewellery offer online shopping?
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="pannel">
+          <p>
+            Yes, we offer online shopping options through our official website and select online platforms.
+             You can explore our latest collections and make purchases directly from the comfort of your home.
+        </div>
+      </div>
+
+      <div class="faq">
+        <button class="accordion">
+          How do you determine the price of diamond jewelry?
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="pannel">
+          <p>
+            The price of diamond jewelry is determined based on the quality of the diamond
+             (4Cs: Cut, Color, Clarity, and Carat), along with the current market rates for diamonds and gold.
+              Our staff can guide you through the pricing process in-store.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq">
+        <button class="accordion">
+          Do you provide certification for diamond jewelry?
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="pannel">
+          <p>
+            Yes, all our diamond jewelry comes with a certificate of authenticity from reputed gemological laboratories, 
+            ensuring the quality and authenticity of the stones.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq">
+        <button class="accordion">
+          Can I customize a jewelry piece?
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="pannel">
+          <p>
+            Yes, we offer customization services. You can design a unique piece by consulting with our expert designers,
+             ensuring a personalized touch to your jewelry.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <script>
+      var acc = document.getElementsByClassName("accordion");
+      var i;
+
+      for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function () {
+          this.classList.toggle("active");
+          this.parentElement.classList.toggle("active");
+
+          var pannel = this.nextElementSibling;
+
+          if (pannel.style.display === "block") {
+            pannel.style.display = "none";
+          } else {
+            pannel.style.display = "block";
+          }
+        });
+      }
+    </script>
+{% endblock %}      

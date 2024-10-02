@@ -1,0 +1,243 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <style>
+    .first-div {
+      height: 6vh;
+      margin-top: 7%;
+
+    } 
+  /* updated sticky navabar  */
+    @media only screen and (max-width: 425px) {   
+      .first-div {
+      height: 6vh;
+      margin-top: 34%;
+      }
+    }
+    .dropdown-meenu {
+      width: 60vw;
+      display: none;
+      /* Hide menu by default */
+      position: absolute;
+      left: 0;
+      top: 100%;
+    }
+
+    .ul-nav .nav-item {
+      margin: 0 10px;
+      position: relative;
+      /* Ensure dropdown positioning relative to parent */
+    }
+
+    .ul-nav .nav-item:hover .dropdown-meenu {
+      display: block;
+      /* Display menu on hover */
+    }
+
+    @media (max-width: 768px) {
+      .dropdown-meenu {
+        display: none;
+        /* Hide menu on mobile */
+      }
+    }
+
+    .items {
+      padding-bottom: 18px;
+    }
+
+    .dropdown-item {
+      text-transform: uppercase;
+      font-size: smaller;
+    }
+
+    .nav-link {
+      font-size: smaller;
+      color: rgb(194, 139, 0);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="first-div bg-light">
+    <ul class="ul-nav nav row d-none d-lg-flex justify-content-around ">
+      <li class="ul-item nav-item dropdown col-lg-2 col-md-1 col-sm-1 col-sm-1">
+        <a class="ul-link text-uppercase nav-link" href="{% url 'store:category-products' 'gold-products' %}"
+          id="megaMenuDropdown1" aria-haspopup="true" aria-expanded="false">Gold</a>
+
+        <div class="dropdown-menu dropdown-meenu mega-menu mega-meenu border-light" aria-labelledby="megaMenuDropdown1">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-6 col-lg-4">
+                <ul class="list-unstyled">
+                  <li><a class="dropdown-item"
+                      href="{% url 'store:gold_ornament_products' 'gold_anklets' %}">Anklets</a></li>
+                  <li><a class="dropdown-item pt-3"
+                      href="{% url 'store:gold_ornament_products' 'gold_baby_bangles' %}">Baby Bangles</a></li>
+                  <li><a class="dropdown-item pt-3"
+                      href="{% url 'store:gold_ornament_products' 'gold_bangles' %}">Bangles</a></li>
+                  <li><a class="dropdown-item pt-3"
+                      href="{% url 'store:gold_ornament_products' 'gold_bracelets' %}">Bracelets</a></li>
+                  <li><a class="dropdown-item pt-3"
+                      href="{% url 'store:gold_ornament_products' 'gold_chains' %}">Chain</a></li>
+                  <li><a class="dropdown-item pt-3"
+                      href="{% url 'store:gold_ornament_products' 'gold_ear_chains' %}">Ear Chains</a></li>
+                  <li><a class="dropdown-item pt-3"
+                    href="{% url 'store:gold_ornament_products' 'gold_ear_rings' %}">Ear Rings</a></li>
+                  <li><a class="dropdown-item pt-3" href="{% url 'store:gold_ornament_products' 'gold_ear_tops' %}">Ear
+                      Tops</a></li>
+                  <li><a class="dropdown-item pt-3"
+                      href="{% url 'store:gold_ornament_products' 'gold_hip_chains' %}">Hip Chains</a></li>
+                  <li><a class="dropdown-item pt-3"
+                      href="{% url 'store:gold_ornament_products' 'gold_necklaces' %}">Necklaces</a></li>
+                  <li><a class="dropdown-item pt-3"
+                      href="{% url 'store:gold_ornament_products' 'gold_nose_pins' %}">Nose Pins</a></li>
+                  <li><a class="dropdown-item pt-3"
+                      href="{% url 'store:gold_ornament_products' 'gold_pendants' %}">Pendants</a></li>
+                  <li><a class="dropdown-item pt-3"
+                      href="{% url 'store:gold_ornament_products' 'gold_rings' %}">Rings</a></li>
+                  <li><a class="dropdown-item pt-3"
+                      href="{% url 'store:gold_ornament_products' 'gold_special_items' %}">Special Items</a></li>
+                </ul>
+              </div>
+              <div class="col-md-6 col-lg-4">
+                <ul class="list-unstyled">
+                  <li>
+                    <p class="dropdown-item"><strong>Shop by type</strong></p>
+                  </li>
+                  <li><a class="dropdown-item" href="{% url 'store:gold_type_products' 'rose_gold' %}">Rose Gold</a>
+                  </li>
+                  <li><a class="dropdown-item" href="{% url 'store:gold_type_products' 'white_gold' %}">White Gold</a>
+                  </li>
+                  <li><a class="dropdown-item" href="{% url 'store:gold_type_products' 'yellow_gold' %}">Yellow Gold</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="ul-item nav-item dropdown col-lg-2 col-md-1 col-sm-1 col-sm-1">
+        <a class="ul-link text-uppercase nav-link" href="{% url 'store:category-products' 'silver-products' %}"
+          id="megaMenuDropdown1" aria-haspopup="true" aria-expanded="false">Silver</a>
+        <div class="dropdown-menu dropdown-meenu mega-menu mega-meenu border-light" aria-labelledby="megaMenuDropdown2">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-6 col-lg-4">
+                <ul class="list-unstyled">
+                  <li><a class="dropdown-item"
+                      href="{% url 'store:silver_ornament_products' 'silver_anklets' %}">Anklets</a></li>
+                  <li><a class="dropdown-item pt-3"
+                      href="{% url 'store:silver_ornament_products' 'silver_bangles' %}">Bangles</a></li>
+                  <li><a class="dropdown-item pt-3"
+                      href="{% url 'store:silver_ornament_products' 'silver_bracelets' %}">Bracelets</a></li>
+                  <li><a class="dropdown-item pt-3"
+                      href="{% url 'store:silver_ornament_products' 'silver_chains' %}">Chains</a></li>
+                  <li><a class="dropdown-item pt-3"
+                      href="{% url 'store:silver_ornament_products' 'silver_necklaces' %}">Necklaces</a></li>
+                  <li><a class="dropdown-item pt-3"
+                      href="{% url 'store:silver_ornament_products' 'silver_lamps' %}">Silver Lamps</a></li>
+                  <li><a class="dropdown-item pt-3"
+                      href="{% url 'store:silver_ornament_products' 'silver_vessels' %}">Silver Vessels</a></li>
+                </ul>
+              </div>
+              <div class="col-md-6 col-lg-4">
+                <ul class="list-unstyled">
+                  <li>
+                    <p class="dropdown-item"><strong>Shop by type</strong></p>
+                  </li>
+                  <li><a class="dropdown-item" href="{% url 'store:silver_type_products' 'sterling_silver' %}">Sterling
+                      Silver</a></li>
+                  <li><a class="dropdown-item" href="{% url 'store:silver_type_products' 'pure_silver' %}">Pure
+                      Silver</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="ul-item nav-item dropdown col-lg-2 col-md-1 col-sm-1 col-sm-1">
+        <a class="ul-link text-uppercase nav-link" href="{% url 'store:category-products' 'diamond-products' %}"
+          id="megaMenuDropdown1" aria-haspopup="true" aria-expanded="false">Diamond</a>
+        <div class="dropdown-menu dropdown-meenu mega-menu mega-meenu border-light" aria-labelledby="megaMenuDropdown3">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-6 col-lg-4">
+                <ul class="list-unstyled">
+                  <li><a class="dropdown-item"
+                      href="{% url 'store:diamond_type_products' 'diamond_bangles' %}">Bangles</a></li>
+                  <li><a class="dropdown-item pt-3"
+                      href="{% url 'store:diamond_type_products' 'diamond_bracelets' %}">Bracelets</a></li>
+                  <li><a class="dropdown-item pt-3"
+                      href="{% url 'store:diamond_type_products' 'diamond_ear_rings' %}">Ear Rings</a></li>
+                  <li><a class="dropdown-item pt-3"
+                      href="{% url 'store:diamond_type_products' 'diamond_necklaces' %}">Necklaces</a></li>
+                  <li><a class="dropdown-item pt-3"
+                      href="{% url 'store:diamond_type_products' 'diamond_rings' %}">Rings</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="ul-item nav-item col-lg-2 col-md-1 col-sm-1 col-xs-1">
+        <a class="ul-link nav-link  text-uppercase" href="{% url 'store:gifts' %}"
+          aria-haspopup="true" aria-expanded="false">Gifts</a>
+      </li>
+      <li class="ul-item nav-item dropdown col-lg-2 col-md-1 col-sm-1 col-xs-1">
+        <a class="ul-link nav-link text-uppercase" href="#" id="megaMenuDropdown4" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">Today's Rates</a>
+        <div class="dropdown-menu dropdown-meenu mega-menu border-light" aria-labelledby="megaMenuDropdown4">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-6 col-lg-4">
+                <ul class="list-unstyled">
+                  <li class="dropdown-item">
+                    Gold (18K):
+                    {% if gold_18k_rate %}
+                    {{ gold_18k_rate.rate }}/g
+                    {% else %}
+                    N/A
+                    {% endif %}
+                  </li>
+                  <li class="dropdown-item">
+                    Gold (22K):
+                    {% if gold_22k_rate %}
+                    {{ gold_22k_rate.rate }}/g
+                    {% else %}
+                    N/A
+                    {% endif %}
+                  </li>
+                  <li class="dropdown-item">
+                    Gold (24K):
+                    {% if gold_24k_rate %}
+                    {{ gold_24k_rate.rate }}/g
+                    {% else %}
+                    N/A
+                    {% endif %}
+                  </li>
+                  <li class="dropdown-item">
+                    Silver:
+                    {% if silver_rate %}
+                    {{ silver_rate.rate }}/g
+                    {% else %}
+                    N/A
+                    {% endif %}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</body>
+
+</html>

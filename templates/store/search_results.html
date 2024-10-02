@@ -1,0 +1,197 @@
+{% extends 'base.html' %} {% load static %} {% load humanize %}
+{% block content %}
+
+
+<div class="container py-5">
+  <h3 class="text-center text-uppercase mb-5">Search Results</h3>
+
+  <div class="row">
+    {% if gold_products or silver_products or diamond_products %}
+    {% for product in gold_products %}
+    <div class="col-xl-3 col-lg-4 col-sm-6">
+      <div class="product text-center">
+        <div class="position-relative mb-3">
+          <div class="badge text-white badge-"></div>
+          <a
+            class="d-block"
+            href="{% url 'store:product-detail' product.slug %}"
+          >
+            {% if product.images.exists %} 
+            {% with first_image=product.images.first %}
+            <img
+              class="img-fluid w-100"
+              src="{{ first_image.image.url }}"
+              alt="{{ product.title }}"
+            />
+            {% endwith %}
+            {% else %}
+            <img
+              class="img-fluid w-100"
+              src="{% static 'img/auspiciousoccasions.png' %}"
+              alt="{{ product.title }}"
+            />
+            {% endif %}
+          </a>
+          <div class="product-overlay">
+            <ul class="mb-0 list-inline">
+              <li class="list-inline-item m-0 p-0">
+                <form
+                  action="{% url 'store:add_to_wishlist' product.id 'gold' %}"
+                  method="GET"
+                >
+                  <button
+                    type="submit"
+                    class="btn btn-sm"
+                    style="
+                      border-color: grey;
+                      background-color: white;
+                      border-radius: 5px;
+                    "
+                  >
+                    <i class="fa-solid fa-heart text-danger"></i>
+                  </button>
+                </form>
+              </li>
+              <li class="list-inline-item m-0 p-0">
+                <form action="{% url 'store:add-to-cart' %}">
+                  <input
+                    type="hidden"
+                    name="prod_slug"
+                    value="{{ product.slug }}"
+                  />
+                  <button
+                    type="submit"
+                    class="btn btn-dark btn-sm btn-block h-100 d-flex align-items-center justify-content-center"
+                  >
+                    Add to Cart
+                  </button>
+                </form>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <h6>
+          <a
+            class="reset-anchor"
+            href="{% url 'store:product-detail' product.slug %}"
+            >{{ product.title }}</a
+          >
+        </h6>
+        <p class="small text-muted">
+          {% if product.fixed_mrp_price %} 
+          ₹{{ product.fixed_mrp_price }}
+          {% elif product.discount > 0 %}
+          ₹{{ product.get_discounted_price|floatformat:0 }}
+          {% else %} 
+          ₹{{ product.total_amount|intcomma }} 
+          {% endif %}
+        </p>
+      </div>
+    </div>
+    {% endfor %}
+
+    {% for product in silver_products %}
+        <div class="col-xl-3 col-lg-4 col-sm-6">
+            <div class="product text-center">
+                <div class="position-relative mb-3">
+                    <div class="badge text-white badge-"></div>
+                    <a class="d-block" href="{% url 'store:product-detail' product.slug %}">
+                        {% if product.images.exists %}
+                            {% with first_image=product.images.first %}
+                                <img class="img-fluid w-100" src="{{ first_image.image.url }}" alt="{{ product.title }}">
+                            {% endwith %}
+                        {% else %}
+                            <img class="img-fluid w-100" src="{% static 'img/auspiciousoccasions.png' %}" alt="{{ product.title }}">
+                        {% endif %}
+                    </a>
+                    <div class="product-overlay">
+                        <ul class="mb-0 list-inline">
+                            <li class="list-inline-item m-0 p-0">
+                                <form action="{% url 'store:add_to_wishlist' product.id 'silver' %}" method="GET">
+                                    <button type="submit" class="btn btn-sm" style="border-color: grey; background-color: white; border-radius: 5px;">
+                                        <i class="fa-solid fa-heart text-danger"></i>
+                                    </button>
+                                </form>
+                            </li>
+                            <li class="list-inline-item m-0 p-0">
+                                <form action="{% url 'store:add-to-cart' %}">
+                                    <input type="hidden" name="prod_slug" value="{{ product.slug }}" />
+                                    <button type="submit" class="btn btn-dark btn-sm btn-block h-100 d-flex align-items-center justify-content-center">
+                                        Add to Cart
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <h6><a class="reset-anchor" href="{% url 'store:product-detail' product.slug %}">{{ product.title }}</a></h6>
+                <p class="small text-muted">
+                    {% if product.fixed_mrp_price %}
+                        ₹{{ product.fixed_mrp_price }}
+                    {% elif product.discount > 0 %}
+                        ₹{{ product.get_discounted_price|floatformat:0 }}
+                    {% else %}
+                        ₹{{ product.total_amount|intcomma }}
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    {% endfor %}
+
+    {% for product in diamond_products %}
+        <div class="col-xl-3 col-lg-4 col-sm-6">
+            <div class="product text-center">
+                <div class="position-relative mb-3">
+                    <div class="badge text-white badge-"></div>
+                    <a class="d-block" href="{% url 'store:product-detail' product.slug %}">
+                        {% if product.images.exists %}
+                            {% with first_image=product.images.first %}
+                                <img class="img-fluid w-100" src="{{ first_image.image.url }}" alt="{{ product.title }}">
+                            {% endwith %}
+                        {% else %}
+                            <img class="img-fluid w-100" src="{% static 'img/auspiciousoccasions.png' %}" alt="{{ product.title }}">
+                        {% endif %}
+                    </a>
+                    <div class="product-overlay">
+                        <ul class="mb-0 list-inline">
+                            <li class="list-inline-item m-0 p-0">
+                                <form action="{% url 'store:add_to_wishlist' product.id 'diamond' %}" method="GET">
+                                    <button type="submit" class="btn btn-sm" style="border-color: grey; background-color: white; border-radius: 5px;">
+                                        <i class="fa-solid fa-heart text-danger"></i>
+                                    </button>
+                                </form>
+                            </li>
+                            <li class="list-inline-item m-0 p-0">
+                                <form action="{% url 'store:add-to-cart' %}">
+                                    <input type="hidden" name="prod_slug" value="{{ product.slug }}" />
+                                    <button type="submit" class="btn btn-dark btn-sm btn-block h-100 d-flex align-items-center justify-content-center">
+                                        Add to Cart
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <h6><a class="reset-anchor" href="{% url 'store:product-detail' product.slug %}">{{ product.title }}</a></h6>
+                <p class="small text-muted">
+                    {% if product.fixed_mrp_price %}
+                        ₹{{ product.fixed_mrp_price }}
+                    {% elif product.discount > 0 %}
+                        ₹{{ product.get_discounted_price|floatformat:0 }}
+                    {% else %}
+                        ₹{{ product.total_amount|intcomma }}
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    {% endfor %}
+
+    {% else %}
+
+    <div class="col-12 text-center">
+      <p class="text-muted">No products available.</p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

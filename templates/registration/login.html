@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8 col-xl-6">
+
+            <h1 class="mb-5 text-center">Log In to Your Account</h1>
+
+            <div class="card mb-4" id="forms">
+                <div class="card-body">
+
+                    {% if messages %}
+                        <div class="alert-container">
+                            {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }}">
+                                    {{ message }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <form method="post" action="{% url 'store:login' %}">
+                        <fieldset>
+                            {% csrf_token %}
+                            {% for field in form %}
+                                <div class="form-group row">
+                                    <label for="{{ field.id_for_label }}" class="col-sm-3 col-form-label">{{ field.label_tag }}</label>
+                                    <div class="col-sm-9">
+                                        {{ field }}
+                                        <small class="text-danger">{{ field.errors|striptags }}</small>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            <button class="btn btn-primary btn-block" type="submit">Login</button>
+                        </fieldset>
+
+                        {% if form.non_field_errors %}
+                            {% for error in form.non_field_errors %}
+                                <p class="alert alert-danger my-3">
+                                    {{ error }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </p>
+                            {% endfor %}
+                        {% endif %}
+                    </form>
+
+                    <hr>
+
+                    <div class="text-center">
+                        Forgot Password? <a href="{% url 'store:password-reset' %}">Reset Now</a><br>
+                        New Member? <a href="{% url 'store:register' %}">Create an Account</a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block extra_css %}
+<style>
+    .form-group.row {
+        margin-bottom: 1rem;
+    }
+    .form-group .col-form-label {
+        text-align: right;
+    }
+    .form-group .form-control {
+        border-radius: 0.25rem;
+    }
+    .btn-block {
+        display: block;
+        width: 100%;
+    }
+</style>
+{% endblock extra_css %}

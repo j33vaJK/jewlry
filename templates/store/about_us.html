@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content%}
+
+<style>
+    .img {
+        border-radius: 50px;
+    }
+
+    .img3 {
+        border-radius: 50px;
+    }
+
+    
+
+    a {
+        text-decoration: none;
+        color: black;
+    }
+
+    .input-icons {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .input-icons img {
+        position: absolute;
+    }
+
+    .input-icons .icon {
+        padding: 10px;
+        text-align: center;
+    }
+
+    .input-field {
+        width: 100%;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .round_icon_img i {
+        font-size: 70px;
+        color: #3bafb8;
+
+    }
+
+    .in {
+        height: 33vh;
+        border-style: ridge;
+    }
+
+    .in:hover {
+        box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+        border-color: white;
+    }
+
+
+
+    @media only screen and (max-width: 768px) {
+
+        /* CSS to center the logo */
+        .logo {
+            display: block;
+            margin-left: 77px;
+            /* Center the logo horizontally */
+        }
+    }
+.para{
+    text-align: left  ;
+}    
+</style>
+    <div class="container story" style="text-align-last: center">
+    <h1 class="mt-5">A Legacy of Timeless Elegance</h1>
+    <p class="mt-5">
+        <div class="">
+        At Subbiah Jewellery, we believe that jewelry is not just an accessory; it is a symbol of cherished memories, love, and
+         tradition. For over 40years, we have been committed to crafting exquisite pieces that reflect the essence of timeless elegance.
+          From our modest beginnings to becoming acelebrated name in Trivandrum's vibrant jewelry scene, 
+         Subbiah Jewellery has always prioritized quality, craftsmanship, and customer satisfaction.
+          Our journey is one of passion, dedication, and a deep understanding of 
+         the art of jewelry-making, which has been passed down through generations.</p>
+        </div>
+    <div class="row mt-5">
+        <div class="col-md-6">
+            {% comment %} <img src="static/images/img1.jpg" class="img w-75" alt=""> {% endcomment %}
+             <img src="{% static 'images/img1.jpg' %}" width="65%" height="" class="img" alt="">
+        </div>
+        <div class="col-md-6 text-justify">
+            <h1 class="mt-5">Craftsmanship That Speaks Volumes</h1>
+            <p class="w-100 mt-md-5 ">Every piece of jewelry at Subbiah Jewellery is a masterpiece, meticulously crafted by 
+                skilled artisans who bring years of expertise and creativity to their work. We offer a diverse collection that 
+                caters to every taste and occasion, from classic designs that exude traditional charm to contemporary pieces 
+                that reflect modern elegance. Our commitment to using only the finest materials—whether it's gold, diamonds, 
+                or precious gemstones—ensures that each piece is a testament to our unwavering dedication to quality. 
+                At Subbiah Jewellery, we believe that true beauty lies in the details, and our craftsmanship is a reflection
+                 of this belief.</p>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-md-6">
+            <h1 class="mt-5">A Customer-Centric Approach</h1>
+            <p class="mt-md-5 text-justify">At the core of Subbiah Jewellery's philosophy is our deep-rooted commitment to our customers. 
+                 We understand that purchasing jewelry is a personal and significant experience, and we strive to make it as
+                  special and memorable as possible. Our knowledgeable and friendly staff are always on hand to guide you 
+                  through our collections, helping you find the perfect piece that not only meets your expectations 
+                  but also becomes a treasured part of your life's story. We take pride in offering personalized 
+                  service that goes beyond the ordinary, ensuring that every visit to Subbiah Jewellery is a delightful experience..</p>
+        </div>
+        <div class="col-md-6">
+            <img src="{% static 'images/img2.jpg' %}" width="65%" height="80%" class="img" alt="">
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-md-6">
+            <img src="{% static 'images/img3.jpg' %}" width="65%" height="" class="img" alt="">
+        </div>
+        <div class="col-md-6">
+            <h1 class="mt-md-5">Celebrating Heritage <br> with Innovation</h1>
+            <p class="mt-md-5 text-justify">While we take immense pride in our rich heritage and the traditional craftsmanship that defines us, 
+                we also embrace innovation to stay at the forefront of the ever-evolving world of jewelry design. 
+                Our collections are a harmonious blend of the old and the new, where classic designs meet contemporary trends, 
+                creating pieces that are both timeless and relevant. At Subbiah Jewellery, we are constantly exploring
+                 new techniques, materials, and designs to bring you jewelry that not only reflects the beauty of 
+                 tradition but also resonates with the elegance of modernity</p>
+        </div>
+    </div>
+    <div class="row mt-5 ">
+        <div class="col-md-6">
+            <h1 class="mt-5">Our Journey Continues</h1>
+            <p class="mt-md-5 text-justify">As we continue to grow and evolve, our focus remains steadfast on delivering 
+                exceptional jewelry and unparalleled service to our valued customers. We invite you to visit any of 
+                our five branches located across Trivandrum and experience the legacy of Subbiah Jewellery firsthand.
+                 Whether you are looking for a statement piece to mark a special occasion,
+                  a delicate design to celebrate a personal milestone, or a timeless treasure to pass down through generations,
+                  Subbiah Jewellery is your ultimate destination for all things exquisite and elegant. Our journey is one that we 
+                  share with you, and we look forward to being a part of your most cherished moments for many years to come..</p>
+        </div>
+        <div class="col-md-6 mb-4">
+            <img src="{% static 'images/img4.jpg' %}" width="65%" height="" class="img" alt="">
+        </div>
+    </div>
+</div>
+</div>
+</html>
+{% endblock %}      
+

@@ -1,0 +1,164 @@
+{% load static %}
+<header class="header bg-white fixed-top">
+  <div class="container-fluid px-0 px-lg-3">
+    <nav class="navbar navbar-expand-lg navbar-light py-3 px-lg-0">
+      <a class="navbar-brand" href="{% url 'store:home' %}">
+        <img
+          src="{% static 'images/newlogo.jpeg' %}"
+          width="70"
+          height="70"
+          class="d-inline-block"
+          alt=""
+        />
+        <span class="font-weight-bold text-uppercase pt-3 text-dark"
+          >Pulse Jewellery</span
+        >
+      </a>
+      <button
+        class="navbar-toggler navbar-toggler-right"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse bg-light" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" href="{% url 'store:home' %}">Home</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              id="pagesDropdown"
+              href="#"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+              >Categories</a
+            >
+            <div class="dropdown-menu mt-3" aria-labelledby="pagesDropdown">
+              {% if categories_menu %} {% for cat_menu in categories_menu %}
+              <a
+                class="dropdown-item border-0 transition-link"
+                href="{% url 'store:category-products' cat_menu.slug %}"
+                >{{cat_menu.title}}</a
+              >
+              {% endfor %} {% endif %}
+              <hr />
+              <a
+                class="dropdown-item border-0 transition-link"
+                href="{% url 'store:all-categories' %}"
+                >All Categories</a
+              >
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'store:contact' %}">Contact</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ml-auto d-flex align-items-start">
+          <li class="nav-item d-none d-lg-block">
+            <form
+              class="form-inline mt-2"
+              method="get"
+              action="{% url 'store:search_products' %}"
+            >
+              {% csrf_token %}
+              <div class="search-container">
+              <input
+                class=" search-bar"
+                type="text"
+                id="search-input"
+                name="query"
+                placeholder="Search for products..."
+                aria-label="Search"
+              />
+              <button class="btn search-button" type="submit">
+                <i class="fa fa-search"></i>
+              </button>
+            </div>
+            </form>
+          </li>
+          {% if request.user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link text-center" href="{% url 'store:cart' %}">
+              <i class="fas fa-shopping-cart mr-1 text-gray"></i
+              ><br />Cart<small class="text-gray"
+                >({{cart_items.count}})</small
+              ></a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-center" href="{% url 'store:wishlist' %}">
+              <i class="fa-solid fa-heart text-gray"></i><br />
+              Wishlist {% comment %}
+              <small class="text-gray">({{ wishlist_count }})</small>
+              {% endcomment %}
+            </a>
+          </li>
+          <li class="nav-item dropdown d-flex align-items-start">
+            <a
+              class="nav-link dropdown-toggle text-center"
+              id="pagesDropdown"
+              href="#"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+              ><i class="fas fa-user-alt mr-1 text-gray"></i><br />Profile</a
+            >
+
+            <div
+              class="dropdown-menu dropdown-menu-right d-flex flex-wrap mt-3"
+              aria-labelledby="pagesDropdown"
+            >
+              <a
+                class="dropdown-item border-0 transition-link"
+                href="{% url 'store:profile' %}"
+                >Profile</a
+              >
+              <a
+                class="dropdown-item border-0 transition-link"
+                href="{% url 'store:cart' %}"
+                >Cart</a
+              >
+              <a
+                class="dropdown-item border-0 transition-link"
+                href="{% url 'store:orders' %}"
+                >Orders</a
+              >
+              <a
+                class="dropdown-item border-0 transition-link"
+                href="{% url 'store:password-change' %}"
+                >Change Password</a
+              >
+              <hr />
+              <a
+                class="dropdown-item border-0 transition-link"
+                href="{% url 'store:logout' %}"
+                >Log Out</a
+              >
+            </div>
+          </li>
+          {% else %}
+          <li class="nav-item pt-2">
+            <a class="nav-link" href="{% url 'store:login' %}"
+              >Login / Create Account</a
+            >
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+  </div>
+  </div>
+  <!-- <style>
+   .navbar2 {
+  position: sticky;
+  top: 0;
+   }
+  </style> -->
+</header>

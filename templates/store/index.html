@@ -1,0 +1,286 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% include 'navebar_2.html' %}
+{% block content %}
+
+
+<style>
+    .footerimg{
+        border-radius: 15px;
+    }
+    .footerimg img{
+        border-radius: 15px;
+    }
+</style>
+
+<!-- CAROUSAL SECTION-->
+<!-- navbar2 -->
+<!-- navbar2 -->
+
+<div id="demo" class="carousel slide" data-ride="carousel">
+
+    <!-- Indicators -->
+    <ul class="carousel-indicators">
+        <li data-target="#demo" data-slide-to="0" class="active"></li>
+        <li data-target="#demo" data-slide-to="1"></li>
+        <li data-target="#demo" data-slide-to="2"></li>
+    </ul>
+
+    <!-- The slideshow -->
+    <div class="carousel-inner ">
+        {% for image in carousal_images %}
+        <div class="carousel-item{% if forloop.first %} active{% endif %}">
+            <a class="d-block" href="{{ image.carousal_image.url }}" data-lightbox="product"
+               title="Carousal Image {{ forloop.counter }}">
+                <img class="img-fluid" src="{{ image.carousal_image.url }}"
+                     alt="Carousal Image {{ forloop.counter }}"/>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Left and right controls
+    <a class="carousel-control-prev" href="#demo" data-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a class="carousel-control-next" href="#demo" data-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </a>-->
+
+</div>
+
+
+<div class="carousels">
+    <div class="container-fluid profile">
+        {% for image in special_images %}
+        <a href="#">
+            <img class="img-fluid" src="{{ image.special_image.url }}" alt="Special Image">
+        </a>
+        {% endfor %}
+    </div>
+
+</div>
+
+<!-- HERO SECTION-->
+<div class="container">
+    <!-- CATEGORIES SECTION-->
+    <section class="pt-5">
+        <header class="text-center">
+            <p class="small text-muted small text-uppercase mb-1">Carefully created collections</p>
+            <h2 class="h5 text-uppercase mb-4">Browse our categories</h2>
+        </header>
+        <div class="row">
+            {% if categories %}
+            {% for category in categories %}
+            <div class="col-md-4 mb-4 mb-md-0">
+                <a class="category-item" href="{% url 'store:category-products' category.slug %}">
+                    {% if category.category_image %}
+                    <img class="img-fluid" src="{{ category.category_image.url }}" alt="{{ category.title }}">
+                    {% else %}
+                    <img class="img-fluid" src="{% static 'img/cat-img-1.jpg' %}" alt="{{ category.title }}">
+                    {% endif %}
+                    <strong class="category-item-title">{{ category.title }}</strong>
+                </a>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </section>
+
+
+    <!-- TRENDING PRODUCTS-->
+    <section class="py-5">
+        <header>
+            <h2 class="h5 text-uppercase mb-4">Top trending products</h2>
+        </header>
+        <div class="row">
+            {% if gold_products or silver_products or diamond_products %}
+            {% for product in gold_products %}
+            <div class="col-xl-3 col-lg-4 col-sm-6">
+                <div class="product text-center">
+                    <div class="position-relative mb-3">
+                        <div class="badge text-white badge-"></div>
+                        <a class="d-block" href="{% url 'store:product-detail' product.slug %}">
+                            {% if product.images.exists %}
+                                {% with first_image=product.images.first %}
+                                    <img class="img-fluid w-100" src="{{ first_image.image.url }}" alt="{{ product.title }}">
+                                {% endwith %}
+                            {% else %}
+                                <img class="img-fluid w-100" src="{% static 'img/auspiciousoccasions.png' %}" alt="{{ product.title }}">
+                            {% endif %}
+                        </a>
+                        <div class="product-overlay">
+                            <ul class="mb-0 list-inline">
+                                <li class="list-inline-item m-0 p-0">
+                                    <form action="{% url 'store:add_to_wishlist' product.id product.type %}" method="GET">
+                                        <input type="hidden" name="prod_id" value="{{ product.id }}">
+                                        <button type="submit" class="btn btn-sm" style="border-color: grey; background-color: white; border-radius: 5px;">
+                                            <i class="fa-solid fa-heart text-danger"></i>
+                                        </button>
+                                    </form>
+                                </li>
+                                <li class="list-inline-item m-0 p-0">
+                                    <form action="{% url 'store:add-to-cart' %}">
+                                        <input
+                                            type="hidden"
+                                            name="prod_slug"
+                                            value="{{ product.slug }}"
+                                            id="product_slug"
+                                        />
+                                        <button
+                                            type="submit"
+                                            class="btn btn-dark btn-sm btn-block h-100 d-flex align-items-center justify-content-center"
+                                        >
+                                            Add to Cart
+                                        </button>
+                                    </form>
+                                    
+                                    
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <h6><a class="reset-anchor" href="{% url 'store:product-detail' product.slug %}">{{ product.title }}</a></h6>
+                    <p class="small text-muted">
+                        {% if product.fixed_mrp_price %}
+                            ₹{{ product.fixed_mrp_price }}
+                        {% elif product.discount > 0 %}
+                            ₹{{ product.get_discounted_price|floatformat:0 }}
+                        {% else %}
+                            ₹{{ product.total_amount|intcomma }}
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+            {% endfor %}
+            
+            {% for product in silver_products %}
+            <div class="col-xl-3 col-lg-4 col-sm-6">
+                <div class="product text-center">
+                    <div class="position-relative mb-3">
+                        <div class="badge text-white badge-"></div>
+                        <a class="d-block" href="{% url 'store:product-detail' product.slug %}">
+                            {% if product.images.exists %}
+                                {% with first_image=product.images.first %}
+                                    <img class="img-fluid w-100" src="{{ first_image.image.url }}" alt="{{ product.title }}">
+                                {% endwith %}
+                            {% else %}
+                                <img class="img-fluid w-100" src="{% static 'img/auspiciousoccasions.png' %}" alt="{{ product.title }}">
+                            {% endif %}
+                        </a>
+                        <div class="product-overlay">
+                            <ul class="mb-0 list-inline">
+                                <li class="list-inline-item m-0 p-0">
+                                    <form action="{% url 'store:add_to_wishlist' product.id product.type %}" method="GET">
+                                        <input type="hidden" name="prod_id" value="{{ product.id }}">
+                                        <button type="submit" class="btn btn-sm" style="border-color: grey; background-color: white; border-radius: 5px;">
+                                            <i class="fa-solid fa-heart text-danger"></i>
+                                        </button>
+                                    </form>
+                                </li>
+                                <li class="list-inline-item m-0 p-0">
+                                    <form action="{% url 'store:add-to-cart' %}">
+                                        <input
+                                            type="hidden"
+                                            name="prod_slug"
+                                            value="{{ product.slug }}"
+                                            id="product_slug"
+                                        />
+                                        <button
+                                            type="submit"
+                                            class="btn btn-dark btn-sm btn-block h-100 d-flex align-items-center justify-content-center"
+                                        >
+                                            Add to Cart
+                                        </button>
+                                    </form>
+                                    
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <h6><a class="reset-anchor" href="{% url 'store:product-detail' product.slug %}">{{ product.title }}</a></h6>
+                    <p class="small text-muted">
+                        {% if product.fixed_mrp_price %}
+                            ₹{{ product.fixed_mrp_price }}
+                        {% elif product.discount > 0 %}
+                            ₹{{ product.get_discounted_price|floatformat:0 }}
+                        {% else %}
+                            ₹{{ product.total_amount|intcomma }}
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+            {% endfor %}
+            
+            {% for product in diamond_products %}
+            <div class="col-xl-3 col-lg-4 col-sm-6">
+                <div class="product text-center">
+                    <div class="position-relative mb-3">
+                        <div class="badge text-white badge-"></div>
+                        <a class="d-block" href="{% url 'store:product-detail' product.slug %}">
+                            {% if product.images.exists %}
+                                {% with first_image=product.images.first %}
+                                    <img class="img-fluid w-100" src="{{ first_image.image.url }}" alt="{{ product.title }}">
+                                {% endwith %}
+                            {% else %}
+                                <img class="img-fluid w-100" src="{% static 'img/auspiciousoccasions.png' %}" alt="{{ product.title }}">
+                            {% endif %}
+                        </a>
+                        <div class="product-overlay">
+                            <ul class="mb-0 list-inline">
+                                <li class="list-inline-item m-0 p-0">
+                                    <form action="{% url 'store:add_to_wishlist' product.id product.type %}" method="GET">
+                                        <input type="hidden" name="prod_id" value="{{ product.id }}">
+                                        <button type="submit" class="btn btn-sm" style="border-color: grey; background-color: white; border-radius: 5px;">
+                                            <i class="fa-solid fa-heart text-danger"></i>
+                                        </button>
+                                    </form>
+                                </li>
+                                <li class="list-inline-item m-0 p-0">
+                                    <form action="{% url 'store:add-to-cart' %}">
+                                        <input
+                                            type="hidden"
+                                            name="prod_slug"
+                                            value="{{ product.slug }}"
+                                            id="product_slug"
+                                        />
+                                        <button
+                                            type="submit"
+                                            class="btn btn-dark btn-sm btn-block h-100 d-flex align-items-center justify-content-center "
+                                        >
+                                            Add to Cart
+                                        </button>
+                                    </form>
+                                    
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <h6><a class="reset-anchor" href="{% url 'store:product-detail' product.slug %}">{{ product.title }}</a></h6>
+                    <p class="small text-muted">
+                        {% if product.fixed_mrp_price %}
+                            ₹{{ product.fixed_mrp_price }}
+                        {% elif product.discount > 0 %}
+                            ₹{{ product.get_discounted_price|floatformat:0 }}
+                        {% else %}
+                            ₹{{ product.total_amount|intcomma }}
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <div class="col-12 text-center">
+                <p class="text-muted">No products available.</p>
+            </div>
+            {% endif %}
+        </div>
+    </section>
+</div>
+<div class="w-85 footerimg d-flex justify-content-center mb-5 w-lg-100">
+    <img class="img-fluid" src="media/special_images/footer.jpg" alt="footerimage">
+</div>
+
+{% endblock %}

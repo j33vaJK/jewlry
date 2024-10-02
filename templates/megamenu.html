@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Mega Menu Example 2</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .dropdown-menu.mega-menu {
+        width: 60vw;
+      background-color: #f8f9fa;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+
+    .dropdown-item:hover {
+      background-color: transparent;
+    }
+
+    .dropdown:hover .dropdown-menu {
+      display: block;
+    }
+    .dropdown-item{
+        text-transform: uppercase;
+        font-size: small;
+    }
+    .mega-menu{
+        border: 0;
+    }
+    .items{
+        padding-bottom: 18px;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="navbar-expand" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item dropdown col-sm-3 col-md-4 col-lg-5">
+          <a class="nav-link" href="#" id="megaMenuDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Gold
+          </a>
+          <div class="dropdown-menu mega-menu mt-2" aria-labelledby="megaMenuDropdown1">
+            <div class="row">
+              <div class="col-md-3">
+                <ul class="list-unstyled">
+                  <li><a class="dropdown-item items" href="#">Bangles</a></li>
+                  <li><a class="dropdown-item items" href="#">Chain</a></li>
+                  <li><a class="dropdown-item items" href="#">Bracelets</a></li>
+                  <li><a class="dropdown-item items" href="#">Anklets</a></li>
+                  <li><a class="dropdown-item items" href="#">Pendants</a></li>
+                  <li><a class="dropdown-item items" href="#">Ear chains</a></li>
+                  <li><a class="dropdown-item items" href="#">Nose pins</a></li>
+                  <li><a class="dropdown-item items" href="#">Rings</a></li>
+                  <li><a class="dropdown-item items" href="#">Baby Bangles</a></li>
+                  <li><a class="dropdown-item items" href="#">Ear tops</a></li>
+                  <li><a class="dropdown-item items" href="#">Necklaces</a></li>
+                  <li><a class="dropdown-item items" href="#">Hip Chains</a></li>
+                  <li><a class="dropdown-item" href="#">Special Items</a></li>
+                </ul>
+              </div>
+              <div class="col-md-3">
+                <ul class="list-unstyled">
+                    <li><p class="dropdown-item">Shop by type</p></li>
+                    <li><a class="dropdown-item items" href="#">Rose Gold</a></li>
+                    <li><a class="dropdown-item items" href="#">White Gold</a></li>
+                    <li><a class="dropdown-item" href="#">Yellow Gold</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="nav-item dropdown col-sm-3 col-md-4 col-lg-5">
+          <a class="nav-link" href="#" id="megaMenuDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Silver
+          </a>
+          <div class="dropdown-menu mega-menu mt-2" aria-labelledby="megaMenuDropdown2">
+            <div class="row">
+              <div class="col-md-3">
+                <ul class="list-unstyled">
+                    <li><a class="dropdown-item items" href="#">Bangles</a></li>
+                    <li><a class="dropdown-item items" href="#">Bracelets</a></li>
+                    <li><a class="dropdown-item items" href="#">Silver Lamps</a></li>
+                    <li><a class="dropdown-item items" href="#">Silver Vessels</a></li>
+                    <li><a class="dropdown-item items" href="#">Chains</a></li>
+                    <li><a class="dropdown-item items" href="#">Necklaces</a></li>
+                    <li><a class="dropdown-item" href="#">Anklets</a></li>
+                </ul>
+              </div>
+              <div class="col-md-3">
+                <ul class="list-unstyled">
+                    <li><p class="dropdown-item">Shop by type</p></li>
+                    <li><a class="dropdown-item" href="#">Sterling Silver</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="nav-item dropdown col-sm-3 col-md-4 col-lg-5">
+          <a class="nav-link" href="#" id="megaMenuDropdown3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Diamond
+          </a>
+          <div class="dropdown-menu mega-menu mt-2" aria-labelledby="megaMenuDropdown3">
+            <div class="row">
+              <div class="col-md-3">
+                <ul class="list-unstyled">
+                    <li><a class="dropdown-item items" href="#">Rings</a></li>
+                    <li><a class="dropdown-item items" href="#">Necklaces</a></li>
+                    <li><a class="dropdown-item items" href="#">Ear Rings</a></li>
+                    <li><a class="dropdown-item items" href="#">Bracelets</a></li>
+                    <li><a class="dropdown-item" href="#">Bangles</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="nav-item dropdown col-sm-3 col-md-4 col-lg-5">
+          <a class="nav-link" href="#" id="megaMenuDropdown3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Today's Rates
+          </a>
+          <div class="dropdown-menu mega-menu mt-2" aria-labelledby="megaMenuDropdown3">
+            <div class="row">
+              <div class="col-md-3">
+                <ul class="list-unstyled">
+                    <li class="dropdown-item items">Gold :</li>
+                    <li class="dropdown-item items">Silver :</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

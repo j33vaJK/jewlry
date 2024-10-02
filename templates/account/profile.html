@@ -1,0 +1,211 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<style>
+  .profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+
+  .profile-img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: 0.3s ease;
+  }
+
+  .profile-img:hover {
+    opacity: 0.8;
+  }
+
+  .pencil-icon {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: 0.3s ease;
+  }
+
+  .pencil-icon:hover {
+    opacity: 1;
+  }
+
+  .file-input {
+    display: none;
+  }
+
+  .card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: none;
+  }
+
+  .jumbotron {
+    background-color: #f8f9fa;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .table-hover tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+</style>
+
+<div class="container py-5">
+  {% include 'partials/_messages.html' %}
+
+  <div class="row">
+    <!-- Profile Image and Details -->
+    <div class="col-lg-4 text-center mb-4">
+      <div class="jumbotron">
+        <div class="profile-container mb-4">
+          <!-- Wrap the image in a label tag to make it clickable -->
+          <label
+            for="profileImageInput"
+            style="position: relative; display: inline-block"
+          >
+            <img
+              src="{% if request.user.profile.profile_image %}{{ request.user.profile.profile_image.url }}{% else %}{% static 'images/default-profile.png' %}{% endif %}"
+              alt="Profile Picture"
+              class="profile-img rounded-circle"
+            />
+            <i class="fas fa-pencil-alt pencil-icon"></i>
+          </label>
+
+          <form
+            action="{% url 'store:upload_profile_image' %}"
+            method="post"
+            enctype="multipart/form-data"
+            class="mt-3"
+          >
+            {% csrf_token %}
+            <input
+              type="file"
+              name="profile_image"
+              accept="image/*"
+              class="file-input"
+              id="profileImageInput"
+              onchange="this.form.submit()"
+            />
+            <button
+              type="submit"
+              class="btn btn-outline-primary btn-sm mt-2 d-none"
+            >
+              Upload
+            </button>
+          </form>
+        </div>
+        <h1>{{request.user.first_name}} {{request.user.last_name}}</h1>
+        <p><strong>Email:</strong> {{request.user.email}}</p>
+        <p><strong>Username:</strong> {{request.user.username}}</p>
+        <p>
+          <a
+            class="btn btn-primary btn-large col-12"
+            href="{% url 'store:address_view' %}"
+            >Add Address »</a
+          >
+          <a
+            class="btn btn-outline-primary btn-large col-12 mt-2"
+            href="{% url 'store:orders' %}"
+            >My Orders »</a
+          >
+        </p>
+      </div>
+    </div>
+
+    <!-- Address and Orders Section -->
+    <div class="col-lg-8">
+      <div class="row">
+        <!-- Addresses -->
+        <div class="col-md-6 mb-4">
+          <div class="card shadow-sm">
+            <div class="card-header">Addresses</div>
+            <div class="card-body">
+              {% if addresses %} {% for address in addresses %}
+              <h4 class="mb-3">Address {{ forloop.counter }}</h4>
+
+              <span class="float-right">
+                <form
+                  action="{% url 'store:remove_address' address.id %}"
+                  method="post"
+                  style="display: inline"
+                >
+                  {% csrf_token %}
+                  <button
+                    type="submit"
+                    class="btn btn-danger btn-sm"
+                    onclick="return confirm('Are you sure you want to delete this address?');"
+                  >
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                </form>
+              </span>
+
+              <p>
+                <strong>Locality: </strong>{{ address.locality }} <br />
+                <strong>City: </strong>{{ address.city }} <br />
+                <strong>Pincode: </strong>{{ address.pin_code }} <br />
+                <strong>State: </strong>{{ address.state }} <br />
+              </p>
+
+              <hr />
+              {% endfor %} {% else %}
+              <div class="text-danger">Address not Added.</div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <!-- Orders -->
+        <div class="col-md-6 mb-4">
+          <div class="card shadow-sm">
+            <div class="card-header">Orders</div>
+            <div class="card-body">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Item</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% if orders %} {% for order in orders %}
+                  <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>
+                      {{order.product.title}} {% if order.gold_product %}
+                      {{order.gold_product.title }}
+                      <!-- COMMENT  -->
+                      {% elif order.silver_product%}
+                      {{order.silver_product.title }}
+                      <!-- COMMENT -->
+                      {% elif order.diamond_product %}
+                      <!-- COMMENT -->
+                      {{ order.diamond_product.title }} {% else %} Unknown Item
+                      {% endif %}
+                    </td>
+                    <td>{{order.status}}</td>
+                  </tr>
+                  {% endfor %} {% else %}
+                  <tr>
+                    <td class="text-danger" colspan="3">
+                      You've not ordered anything yet.
+                    </td>
+                  </tr>
+                  {% endif %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

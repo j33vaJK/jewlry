@@ -1,0 +1,599 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+  <section class="py-5">
+    <div class="container">
+      <div class="row mb-5">
+        <div class="col-lg-6">
+          <!-- PRODUCT SLIDER -->
+          <div class="d-flex flex-column m-sm-0">
+            <div class="col-sm-12 order-1 order-sm-2">
+              <div class="carousel" id="productCarousel">
+                <div class="carousel-inner">
+                  {% for image in images %}
+                    <div class="carousel-item{% if forloop.first %} active{% endif %}">
+                      <a class="d-block" href="{{ image.image.url }}" data-lightbox="product" title="{{ image.product.title }}"><img class="img-fluid" src="{{ image.image.url }}" alt="{{ image.product.title }}" /></a>
+                    </div>
+                  {% empty %}
+                    <!-- If there are no images associated with the product -->
+                    <div class="carousel-item active">
+                      <a class="d-block" href="{% static 'img/auspiciousoccasions.png' %}" data-lightbox="product" title="{{ product.title }}"><img class="img-fluid w-100" src="{% static 'img/auspiciousoccasions.png' %}" alt="{{ product.title }}" /></a>
+                    </div>
+                  {% endfor %}
+                </div>
+
+                <!-- External Navigation Buttons -->
+                <a class="carousel-control-prev" href="#" role="button" data-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#" role="button" data-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <script>
+            $(document).ready(function () {
+              // Initialize the carousel
+              $('#productCarousel').carousel()
+            
+              // Navigate to the previous slide when clicking the previous button
+              $('.carousel-control-prev').click(function (event) {
+                event.preventDefault() // Prevent default anchor behavior
+                $('#productCarousel').carousel('prev')
+              })
+            
+              // Navigate to the next slide when clicking the next button
+              $('.carousel-control-next').click(function (event) {
+                event.preventDefault() // Prevent default anchor behavior
+                $('#productCarousel').carousel('next')
+              })
+            })
+          </script>
+        </div>
+        <!-- PRODUCT DETAILS -->
+        <div class="col-lg-6">
+          <h1>{{ product.title }}</h1>
+          {% if product.fixed_mrp_price %}
+            <h4> ₹{{ product.fixed_mrp_price }}</h4>
+          {% elif product.discount > 0 %}
+            <p>
+              <strong>Offer Price:</strong>
+              <span style="font-size: 1.5em; color: #333;">₹{{ discounted_price|floatformat:0 }}</span>
+              &nbsp;<span style="text-decoration: line-through; color: #888;">₹{{ total_amount|floatformat:0 }}</span>
+            </p>
+            <div style="background-color: #a00; color: #fff; padding: 5px; display: inline-block; border-radius: 3px;">Flat {{ product.discount }}% off</div>
+          {% else %}
+            <h4><span>₹{{ total_amount|floatformat:0 }}</span></h4>
+          {% endif %}
+          <div class="row align-items-stretch mt-3 mb-4">
+            <div class="col-sm-5 pr-sm-0">
+              <div class="border d-flex align-items-center justify-content-between py-1 px-3 bg-white border-white">
+                <span class="small text-uppercase text-gray mr-4 no-select">Quantity</span>
+                <div class="quantity">
+                  <button class="dec-btn p-0"><i class="fas fa-caret-left"></i></button>
+                  <input name="quantity" class="form-control border-0 shadow-0 p-0" type="text" value="1" />
+                  <button class="inc-btn p-0"><i class="fas fa-caret-right"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% comment %} <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            {% if product_type == 'gold' %}
+              {% if product.gold_ornament_type == 'gold_chains' %}
+                <label class="border-0 mb-3">
+                  <select name="selected_size" class="p-2 bg-white">
+                    <option value="" disabled selected>Size options</option>
+                    <option value="16">16 inches</option>
+                    <option value="24">24 inches</option>
+                    <option value="27">27 inches</option>
+                  </select>
+                </label>
+              {% elif product.gold_ornament_type == 'gold_ear_rings' %}
+                <label class="border-0 mb-3">
+                  <select name="selected_screw_type" class="p-2 bg-white">
+                    <option value="" disabled selected>Select screw type</option>
+                    <option value="Regular Screw">Regular Screw</option>
+                    <option value="South Screw">South Screw</option>
+                  </select>
+                </label>
+              {% endif %}
+            {% elif product_type == 'silver' %}
+              {% if product.silver_ornament_type == 'silver_chains' %}
+                <label class="border-0 mb-3">
+                  <select name="selected_size" class="p-2 bg-white">
+                    <option value="" disabled selected>Size options</option>
+                    <option value="16">16 inches</option>
+                    <option value="24">24 inches</option>
+                    <option value="27">27 inches</option>
+                  </select>
+                </label>
+              {% elif product.silver_ornament_type == 'silver_ear_rings' %}
+                <label class="border-0 mb-3">
+                  <select name="selected_screw_type" class="p-2 bg-white">
+                    <option value="" disabled selected>Select screw type</option>
+                    <option value="Regular Screw">Regular Screw</option>
+                    <option value="South Screw">South Screw</option>
+                  </select>
+                </label>
+              {% endif %}
+            {% endif %}
+          </form> {% endcomment %}
+          <ul class="mb-0 list-inline">
+            <li class="list-inline-item m-0 p-0">
+              <form action="{% url 'store:add_to_wishlist' product.id product_type %}" method="GET">
+                <input type="hidden" name="prod_id" value="{{ product.id }}" />
+                <button type="submit" class="btn btn-dark btn-sm btn-block h-100 d-flex align-items-center justify-content-center">Add to Wishlist</button>
+              </form>
+            </li>
+            <li class="list-inline-item m-0 p-0">
+              <form action="{% url 'store:add-to-cart' %}" method="GET">
+                <input type="hidden" name="prod_slug" value="{{ product.slug }}" id="product_slug" />
+                <button type="submit" class="btn btn-dark btn-sm btn-block h-100 d-flex align-items-center justify-content-center">Add to Cart</button>
+              </form>
+            </li>
+            {% comment %} <li>
+              <form action="{% url 'store:add-to-cart' %}">
+                <input type="hidden" name="prod_slug" value="{{ product.slug }}" id="product_slug" />
+                <button type="submit" class="btn btn-dark btn-sm btn-block h-100 d-flex align-items-center justify-content-center">Add to Cart</button>
+              </form>
+            </li> {% endcomment %}
+          </ul>
+          <br />
+          <ul class="list-unstyled small d-inline-block">
+            <li class="px-3 py-2 mb-1 bg-white">
+              <strong class="text-uppercase">SKU:</strong><span class="ml-2 text-muted">{{ product.sku }}</span>
+            </li>
+            <li class="px-3 py-2 mt-3 mb-1 bg-white text-muted">
+              <strong class="text-uppercase text-dark">Category:</strong><a class="reset-anchor ml-2" href="{% url 'store:category-products' product.category.slug %}">{{ product.category }}</a>
+            </li>
+            <li class="px-3 py-2 mt-3 mb-1 bg-white text-muted">
+              <strong class="text-uppercase text-dark">Price Breakup</strong> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+              </svg>
+            </li>
+            <li class="px-3 py-2 mt-3 mb-1 bg-white text-muted">
+              <table class="text-center">
+                <thead>
+                  <tr>
+                    {% if product_type == 'diamond' %}
+                      <th>Diamond Price</th>
+                      <th class="px-4">Gold</th>
+                      <th class="px-2">Making Charges</th>
+                      <th class="px-3">GST [SGST + CGST]</th>
+                    {% elif product_type == 'silver' %}
+                      <th>Silver</th>
+                      <th class="px-4">Making Charges</th>
+                      <th class="px-1">GST [SGST + CGST]</th>
+                    {% else %}
+                      <th>Gold</th>
+                      <th class="px-4">Making Charges</th>
+                      <th class="px-2">GST [SGST + CGST]</th>
+                    {% endif %}
+                  </tr>
+                </thead>
+                <tbody>
+                  {% if product.fixed_mrp_price %}
+                  <tr>
+                    <td>N/A</td>
+                    <td>N/A</td>
+                    <td>N/A</td>
+                  </tr>
+                  {% else %}
+                  <tr>
+                    {% if product_type == 'diamond' %}
+                      <td>₹{{ product.diamond_price }}</td>
+                    {% endif %}
+                    <td>₹{{ product.price }}</td>
+                    <td>₹{{ making_charges }}</td>
+                    <td>₹{{ gst_amount }}</td>
+                  </tr>
+                  {% endif %}
+                </tbody>
+              </table>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- DETAILS TABS -->
+  <section>
+    <div class="container-fluid p-5">
+      <h6 class="text-uppercase" style="font-size: 1rem; font-weight: 600;">Product details</h6>
+      <br /><br />
+      <div class="row d-flex justify-content-between">
+        <div class="col-lg-3 col-12 col-md-4 mt-1" style="border-style: solid; border-width: 1px; border-radius: 50px; border-color: goldenrod;">
+          <div class="mt-3">
+            <p class="text-capitalize text-dark text-center px-3">Basic Information</p>
+            <table class="table mt-3" style="border-style: none;">
+              <tbody>
+                <tr>
+                  <td>
+                    <p>SKU:</p>
+                  </td>
+                  <td>
+                    <p class="text-muted">{{ product.sku }}</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <p class="text-dark">Category:</p>
+                  </td>
+                  <td>
+                    <p>{{ product.category }}</p>
+                  </td>
+                </tr>
+                {% if product_type == 'gold' %}
+                
+                 
+                  
+                  {% if product.gold_ornament_type == 'gold_chains' %}
+                    <tr>
+                      <td>
+                        <p class="text-dark">Size:</p>
+                      </td>
+                      <td>
+                        <p>{{ product.size }}</p>
+                      </td>
+                    </tr>
+                  {% elif product.gold_ornament_type == 'gold_rings' %}
+                    <tr>
+                      <td>
+                        <p class="text-dark">Size:</p>
+                      </td>
+                      <td>
+                        <p>{{ product.size }}</p>
+                      </td>
+                    </tr>
+                  {% elif product.gold_ornament_type == 'gold_bangles' %}
+                    <tr>
+                      <td>
+                        <p class="text-dark">Size:</p>
+                      </td>
+                      <td>
+                        <p>{{ product.size }}</p>
+                      </td>
+                    </tr>
+                  {% elif product.gold_ornament_type == 'gold_ear_rings' %}
+                    <tr>
+                      <td>
+                        <p class="text-dark">Screw type:</p>
+                      </td>
+                      <td>
+                        <p>{{ product.screw }}</p>
+                      </td>
+                    </tr>
+                  {% endif %}
+                {% elif product_type == 'silver' %}
+                  {% if product.silver_ornament_type == 'silver_chains' %}
+                    <tr>
+                      <td>
+                        <p class="text-dark">Size:</p>
+                      </td>
+                      <td>
+                        <p>{{ product.size }}</p>
+                      </td>
+                    </tr>
+                  {% elif product.silver_ornament_type == 'silver_rings' %}
+                    <tr>
+                      <td>
+                        <p class="text-dark">Size:</p>
+                      </td>
+                      <td>
+                        <p>{{ product.size }}</p>
+                      </td>
+                    </tr>
+                  {% elif product.silver_ornament_type == 'silver_bangles' %}
+                    <tr>
+                      <td>
+                        <p class="text-dark">Size:</p>
+                      </td>
+                      <td>
+                        <p>{{ product.size }}</p>
+                      </td>
+                    </tr>
+                  {% elif product.silver_ornament_type == 'silver_ear_rings' %}
+                    <tr>
+                      <td>
+                        <p class="text-dark">Screw type:</p>
+                      </td>
+                      <td>
+                        <p>{{ product.screw }}</p>
+                      </td>
+                    </tr>
+                  {% endif %}
+                {% elif product_type == 'diamond' %}
+                  {% if product.diamond_ornament_type == 'diamond_chains' %}
+                    <tr>
+                      <td>
+                        <p class="text-dark">Size:</p>
+                      </td>
+                      <td>
+                        <p>{{ product.size }}</p>
+                      </td>
+                    </tr>
+                  {% elif product.diamond_ornament_type == 'diamond_rings' %}
+                    <tr>
+                      <td>
+                        <p class="text-dark">Size:</p>
+                      </td>
+                      <td>
+                        <p>{{ product.size }}</p>
+                      </td>
+                    </tr>
+                  {% elif product.diamond_ornament_type == 'diamond_bangles' %}
+                    <tr>
+                      <td>
+                        <p class="text-dark">Size:</p>
+                      </td>
+                      <td>
+                        <p>{{ product.size }}</p>
+                      </td>
+                    </tr>
+                  {% elif product.diamond_ornament_type == 'diamond_ear_rings' %}
+                    <tr>
+                      <td>
+                        <p class="text-dark">Screw type:</p>
+                      </td>
+                      <td>
+                        <p>{{ product.screw }}</p>
+                      </td>
+                    </tr>
+                  {% endif %}
+                {% endif %}
+
+                {% if product_type == 'gold' %}
+                <tr>
+                    <td>
+                      <p class="text-dark">Ornament:</p>
+                    </td>
+                    <td>
+                      <p class="reset-anchor">{{ product.gold_ornament_type }}</p>
+                    </td>
+                </tr>
+                {% comment %} <tr>
+                    <td><p class="text-dark">Price:</p></td>
+                    <td><p class="reset-anchor">{{ price }}</p></td>
+                </tr> {% endcomment %}
+                {% elif product_type == 'silver' %}
+                    <tr>
+                        <td>
+                          <p class="text-dark">Ornament:</p>
+                        </td>
+                        <td>
+                          <p class="reset-anchor">{{ product.silver_ornament_type }}</p>
+                        </td>
+                    </tr>
+                    {% comment %} <tr>
+                        <td><p class="text-dark">Price:</p></td>
+                        <td><p class="reset-anchor">{{ price }}</p></td>
+                    </tr> {% endcomment %}
+                {% elif product_type == 'diamond' %}
+                    <tr>
+                        <td>
+                          <p class="text-dark">Ornament:</p>
+                        </td>
+                        <td>
+                          <p class="reset-anchor">{{ product.diamond_ornament_type }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                          <p class="text-dark">Gross Weight:</p>
+                        </td>
+                        <td>
+                          <p class="reset-anchor">{{ product.gross_weight }} (gm)</p>
+                        </td>
+                    </tr>
+                    {% comment %} <tr>
+                        <td><p class="text-dark">Price:</p></td>
+                        <td><p class="reset-anchor">{{ price }}</p></td>
+                    </tr> {% endcomment %}
+                {% endif %}
+            
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-lg-4 col-12 col-md-4 mt-1" style="border-style: solid; border-width: 1px; border-radius: 50px; border-color: goldenrod;">
+          <div class="mt-3">
+            <p class="text-capitalize text-center text-dark">Metal information</p>
+            <table class="table">
+              <tbody>
+                {% if product_type == 'gold' %}
+                  <tr>
+                    <td>
+                      <p>Gold purity:</p>
+                    </td>
+                    <td>
+                      <p class="text-muted">{{ product.karatage }}k</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p class="text-dark">Metal color:</p>
+                    </td>
+                    <td>
+                      <p class="reset-anchor">{{ product.gold }}</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p class="text-dark">Item Net Wt:</p>
+                    </td>
+                    <td>
+                      <p class="reset-anchor">{{ product.weight|floatformat:'3' }} (gm)</p>
+                    </td>
+                  </tr>
+                {% endif %}
+                {% if product_type == 'silver' %}
+                  <tr>
+                    <td>
+                      <p>Silver purity:</p>
+                    </td>
+                    <td>
+                      <p class="text-muted">{{ product.karatage }}</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p class="text-dark">Item Net Wt:</p>
+                    </td>
+                    <td>
+                      <p class="reset-anchor">{{ product.weight|floatformat:'3' }} (gm)</p>
+                    </td>
+                  </tr>
+                {% endif %}
+                {% if product_type == 'diamond' %}
+                  <tr>
+                    <td>
+                      <p>Gold purity:</p>
+                    </td>
+                    <td>
+                      <p class="text-muted">{{ product.karatage }}k</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p class="text-dark">Metal color:</p>
+                    </td>
+                    <td>
+                      <p class="reset-anchor">{{ product.gold }}</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p class="text-dark">Gold Weight:</p>
+                    </td>
+                    <td>
+                      <p class="reset-anchor">{{ product.weight|floatformat:'3' }} (gm)</p>
+                    </td>
+                  {% comment %} </tr>
+                    <td>
+                      <p class="reset-anchor">{{ product.diamond_price|floatformat:'3' }}</p>
+                    </td>
+                  </tr> {% endcomment %}
+                  <tr>
+                    <td>
+                      <p class="text-dark">Diamond Quantity:</p>
+                    </td>
+                    <td>
+                      <p class="reset-anchor">{{ product.diamond_quantity }}</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p class="text-dark">Diamond Color:</p>
+                    </td>
+                    <td>
+                      <p class="reset-anchor">{{ product.diamond_color }}</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p class="text-dark">Diamond Carat:</p>
+                    </td>
+                    <td>
+                      <p class="reset-anchor">{{ product.carats }}</p>
+                    </td>
+                  </tr>
+                {% endif %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-lg-4 col-12 col-md-4 mt-1" style="border-style: solid; border-width: 1px; border-radius: 50px; border-color: goldenrod;">
+          <div class="mt-3">
+            <p class="text-capitalize text-center text-dark">Certification details</p>
+            <table class="table">
+              <tbody>
+                <tr>
+                  <td>
+                    <p>Metal Certification:</p>
+                  </td>
+                  <td>
+                    <p class="text-muted">
+                      {% if product_type == 'gold' and karatage == 22 %}
+                        BIS 916 Hallmark
+                      {% elif product_type == 'silver' %}
+                        925 Certified
+                      {% elif product_type == 'diamond' and karatage == 22 %}
+                        BIS 916 Hallmark
+                      {% else %}
+                        N/A
+                      {% endif %}
+                    </p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br /><br />
+    <div class="container">
+      <div class="row">
+        <div class="col-12 p-5" style="border-style: solid; border-width: 1px; border-radius: 50px; border-color: goldenrod;">
+          <p class="text-uppercase text-dark" style="font-size: 0.9rem;">Looking for a customized Product?</p>
+
+          <form method="POST" action="{% url 'store:order_placed' %}">
+            {% csrf_token %}
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="name"><strong class="text-capitalize text-dark" style="font-size: 0.9rem;">Name</strong></label>
+                <input type="text" class="form-control" id="name" name="name" required />
+              </div>
+              <div class="form-group col-md-6">
+                <label for="product_name"><strong class="text-capitalize text-dark" style="font-size: 0.9rem;">Product Name</strong></label>
+                <input type="text" class="form-control" id="product_name" name="product_name" value="{{ product.title }}" readonly />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="email"><strong class="text-capitalize text-dark" style="font-size: 0.9rem;">Email</strong></label>
+                <input type="email" class="form-control" id="email" name="email" required />
+              </div>
+              <div class="form-group col-md-6">
+                <label for="mobile"><strong class="text-capitalize text-dark" style="font-size: 0.9rem;">Mobile</strong></label>
+                <input type="text" class="form-control" id="mobile" name="mobile" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="message"><strong class="text-capitalize text-dark" style="font-size: 0.9rem;">Message</strong></label>
+              <textarea class="form-control" id="message" name="message" rows="3" required></textarea>
+            </div>
+
+            <div class="submit-button">
+              <button type="submit" class="btn btn-warning">SEND</button>
+            </div>
+            <br />
+          </form>
+        </div>
+      </div>
+    </div>
+
+    {% comment %} <div class="container">
+      <div class="row">
+        <div class="col-12 p-5" style="border-style: solid; border-width: 1px; border-radius: 50px; border-color: goldenrod;">
+          <p class="text-uppercase text-dark" style="font-size: 0.9rem;">Looking for a customized Product?</p>
+
+          <form method="POST" action="{% url 'submit_inquiry' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="submit-button">
+              <button type="submit" class="btn btn-warning">SEND</button>
+            </div>
+            <br />
+          </form>
+        </div>
+      </div>
+    </div> {% endcomment %}
+
+    <br /><br />
+  </section>
+{% endblock %}

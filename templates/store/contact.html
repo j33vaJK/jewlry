@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content%}
+
+<div class="container">
+    <h1 class="mt-5">Contact Us</h1>
+
+    {% if messages %}
+        <div>
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form method="post" action="{% url 'store:contact' %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="name" class="form-label">Your Name</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name">
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Your Email</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
+        </div>
+        <div class="mb-3">
+            <label for="message" class="form-label">Message</label>
+            <textarea class="form-control" id="message" name="message" rows="5" placeholder="Enter your message"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" onclick="message()">Submit</button>
+    </form>
+</div>
+<br>
+<br>
+<br>
+{% endblock %}

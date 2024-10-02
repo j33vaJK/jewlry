@@ -1,0 +1,202 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+<br><br>
+<div class="container">
+    <section>
+        <div class="container">
+            <div class="row px-4 px-lg-5 align-items-center justify-content-center">
+                <div class="col-lg-6">
+                    <h1 class="h2 text-uppercase mb-0 text-center">Wishlist</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+    <br>
+    <div class="row">
+        {% if wishlist %}
+            {% comment %} {% if wishlist.gold_products.all %} {% endcomment %}
+            <div class="col-12">
+                {% comment %} <h4 class="text-center">Gold Products</h4> {% endcomment %}
+                <div class="row">
+                    {% for product in wishlist.gold_products.all %}
+                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                        <div class="product text-center custom-product">
+                            <div class="position-relative mb-3">
+                                <a class="d-block" href="{% url 'store:product-detail' product.slug %}">
+                                    {% if product.images.exists %}
+                                    {% with first_image=product.images.first %}
+                                    <img class="img-fluid w-100" src="{{ first_image.image.url }}" alt="{{ product.title }}">
+                                    {% endwith %}
+                                    {% else %}
+                                    <img class="img-fluid w-100" src="{% static 'img/auspiciousoccasions.png' %}" alt="{{ product.title }}">
+                                    {% endif %}
+                                </a>
+                            </div>
+                            <h6><a class="reset-anchor" href="{% url 'store:product-detail' product.slug %}">{{ product.title }}</a></h6>
+                            <p class="small text-muted">
+                                {% if product.fixed_mrp_price %}
+                                    ₹{{ product.fixed_mrp_price }}
+                                {% elif product.discount > 0 %}
+                                    ₹{{ product.get_discounted_price|floatformat:0 }}
+                                {% else %}
+                                    ₹{{ product.total_amount|intcomma }}
+                                {% endif %}
+                            </p>
+                            <form action="{% url 'store:remove_from_wishlist' product.id 'gold' %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger btn-sm">Remove from Wishlist</button>
+                            </form>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                    {% comment %} silver products {% endcomment %}
+
+                    {% for product in wishlist.silver_products.all %}
+                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                        <div class="product text-center custom-product">
+                            <div class="position-relative mb-3">
+                                <a class="d-block" href="{% url 'store:product-detail' product.slug %}">
+                                    {% if product.images.exists %}
+                                    {% with first_image=product.images.first %}
+                                    <img class="img-fluid w-100" src="{{ first_image.image.url }}" alt="{{ product.title }}">
+                                    {% endwith %}
+                                    {% else %}
+                                    <img class="img-fluid w-100" src="{% static 'img/auspiciousoccasions.png' %}" alt="{{ product.title }}">
+                                    {% endif %}
+                                </a>
+                            </div>
+                            <h6><a class="reset-anchor" href="{% url 'store:product-detail' product.slug %}">{{ product.title }}</a></h6>
+                            <p class="small text-muted">
+                                {% if product.fixed_mrp_price %}
+                                    ₹{{ product.fixed_mrp_price }}
+                                {% elif product.discount > 0 %}
+                                    ₹{{ product.get_discounted_price|floatformat:0 }}
+                                {% else %}
+                                    ₹{{ product.total_amount|intcomma }}
+                                {% endif %}
+                            </p>
+                            <form action="{% url 'store:remove_from_wishlist' product.id 'silver' %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger btn-sm">Remove from Wishlist</button>
+                            </form>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                    {% comment %} diamond products {% endcomment %}
+
+                    {% for product in wishlist.diamond_products.all %}
+                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                        <div class="product text-center custom-product">
+                            <div class="position-relative mb-3">
+                                <a class="d-block" href="{% url 'store:product-detail' product.slug %}">
+                                    {% if product.images.exists %}
+                                    {% with first_image=product.images.first %}
+                                    <img class="img-fluid w-100" src="{{ first_image.image.url }}" alt="{{ product.title }}">
+                                    {% endwith %}
+                                    {% else %}
+                                    <img class="img-fluid w-100" src="{% static 'img/auspiciousoccasions.png' %}" alt="{{ product.title }}">
+                                    {% endif %}
+                                </a>
+                            </div>
+                            <h6><a class="reset-anchor" href="{% url 'store:product-detail' product.slug %}">{{ product.title }}</a></h6>
+                            <p class="small text-muted">
+                                {% if product.fixed_mrp_price %}
+                                    ₹{{ product.fixed_mrp_price }}
+                                {% elif product.discount > 0 %}
+                                    ₹{{ product.get_discounted_price|floatformat:0 }}
+                                {% else %}
+                                    ₹{{ product.total_amount|intcomma }}
+                                {% endif %}
+                            </p>
+                            <form action="{% url 'store:remove_from_wishlist' product.id 'diamond' %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger btn-sm">Remove from Wishlist</button>
+                            </form>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% comment %} {% endif %} {% endcomment %}
+
+            {% comment %} {% if wishlist.silver_products.all %}
+            <div class="col-12 mt-4">
+                <h4 class="text-center">Silver Products</h4>
+                <div class="row">
+                    {% for product in wishlist.silver_products.all %}
+                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                        <div class="product text-center custom-product">
+                            <div class="position-relative mb-3">
+                                <a class="d-block" href="{% url 'store:product-detail' product.slug %}">
+                                    {% if product.images.exists %}
+                                    {% with first_image=product.images.first %}
+                                    <img class="img-fluid w-100" src="{{ first_image.image.url }}" alt="{{ product.title }}">
+                                    {% endwith %}
+                                    {% else %}
+                                    <img class="img-fluid w-100" src="{% static 'img/auspiciousoccasions.png' %}" alt="{{ product.title }}">
+                                    {% endif %}
+                                </a>
+                            </div>
+                            <h6><a class="reset-anchor" href="{% url 'store:product-detail' product.slug %}">{{ product.title }}</a></h6>
+                            <p class="small text-muted">₹{{ product.price }}</p>
+                            <form action="{% url 'store:remove_from_wishlist' product.id 'silver' %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger btn-sm">Remove from Wishlist</button>
+                            </form>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if wishlist.diamond_products.all %}
+            <div class="col-12 mt-4">
+                <h4 class="text-center">Diamond Products</h4>
+                <div class="row">
+                    {% for product in wishlist.diamond_products.all %}
+                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                        <div class="product text-center custom-product">
+                            <div class="position-relative mb-3">
+                                <a class="d-block" href="{% url 'store:product-detail' product.slug %}">
+                                    {% if product.images.exists %}
+                                    {% with first_image=product.images.first %}
+                                    <img class="img-fluid w-100" src="{{ first_image.image.url }}" alt="{{ product.title }}">
+                                    {% endwith %}
+                                    {% else %}
+                                    <img class="img-fluid w-100" src="{% static 'img/auspiciousoccasions.png' %}" alt="{{ product.title }}">
+                                    {% endif %}
+                                </a>
+                            </div>
+                            <h6><a class="reset-anchor" href="{% url 'store:product-detail' product.slug %}">{{ product.title }}</a></h6>
+                            <p class="small text-muted">₹{{ product.price }}</p>
+                            <form action="{% url 'store:remove_from_wishlist' product.id 'diamond' %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger btn-sm">Remove from Wishlist</button>
+                            </form>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %} {% endcomment %}
+        {% else %}
+        <div class="col-sm-12 empty-cart-cls text-center mb-5">
+            <img src="{% static 'images/empty_wishlist.png' %}" width="330" height="330" class="img-fluid mb-4 mr-3"><br>
+            <div class="row d-flex justify-content-center mb-3">
+                <h4 style="color: red;">Ooops!!!...</h4>
+                <h4 style="color: black;">&nbsp;nothing here</h4>
+            </div>
+            <a href="{% url 'store:home' %}"><button class="btn" style="background-color: gold;"><i class="fas fa-long-arrow-alt-left mr-2"></i>Continue shopping</button></a>
+        </div>
+        {% endif %}
+    </div>
+    <br>
+</div>
+{% endblock content %}

@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<section class="py-5">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-lg-6">
+                <!-- PRODUCT SLIDER-->
+                <div class="d-flex flex-column m-sm-0">
+                    <div class="col-sm-12 order-1 order-sm-2">
+                        <div class="carousel" id="productCarousel">
+                            <div class="carousel-inner">
+                                {% for image in images %}
+                                    <div class="carousel-item{% if forloop.first %} active{% endif %}">
+                                        <a class="d-block" href="{{ image.image.url }}" data-lightbox="product" title="{{ product.title }}">
+                                            <img class="img-fluid" src="{{ image.image.url }}" alt="{{ product.title }}">
+                                        </a>
+                                    </div>
+                                {% empty %}
+                                    <!-- If there are no images associated with the product -->
+                                    <div class="carousel-item active">
+                                        <a class="d-block" href="{% static 'img/default-image.png' %}" data-lightbox="product" title="{{ product.title }}">
+                                            <img class="img-fluid w-100" src="{% static 'img/default-image.png' %}" alt="{{ product.title }}">
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            
+                            <!-- External Navigation Buttons -->
+                            <a class="carousel-control-prev" href="#" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    $(document).ready(function() {
+                      // Initialize the carousel
+                      $('#productCarousel').carousel();
+
+                      // Navigate to the previous slide when clicking the previous button
+                      $('.carousel-control-prev').click(function(event) {
+                        event.preventDefault(); // Prevent default anchor behavior
+                        $('#productCarousel').carousel('prev');
+                      });
+
+                      // Navigate to the next slide when clicking the next button
+                      $('.carousel-control-next').click(function(event) {
+                        event.preventDefault(); // Prevent default anchor behavior
+                        $('#productCarousel').carousel('next');
+                      });
+                    });
+                </script>
+            </div>
+            <!-- PRODUCT DETAILS-->
+            <div class="col-lg-6">
+                <h1>{{ product.title }}</h1>
+                <h4>
+                    <span>₹{{ product.price|floatformat:0 }}</span>
+                </h4>
+                <div class="row align-items-stretch mt-3 mb-4">
+                    <div class="col-sm-5 pr-sm-0">
+                        <div class="border d-flex align-items-center justify-content-between py-1 px-3 bg-white border-white">
+                            <span class="small text-uppercase text-gray mr-4 no-select">Quantity</span>
+                            <div class="quantity">
+                                <button class="dec-btn p-0">
+                                    <i class="fas fa-caret-left"></i>
+                                </button>
+                                <input name="quantity" class="form-control border-0 shadow-0 p-0" type="text" value="1" />
+                                <button class="inc-btn p-0">
+                                    <i class="fas fa-caret-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3 pl-sm-0">
+                        <form action="{% url 'store:add-to-cart' %}">
+                            <input
+                                type="hidden"
+                                name="prod_slug"
+                                value="{{ product.slug }}"
+                                id="product_slug"
+                            />
+                            <button
+                                type="submit"
+                                class="btn btn-dark btn-lg btn-block h-100 d-flex align-items-center justify-content-center px-0"
+                            >
+                                Add to Cart
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <ul class="mb-0 list-inline">
+                    <li class="list-inline-item m-0 p-0">
+                        <form action="{% url 'store:add_to_wishlist' %}" method="GET">
+                            <input type="hidden" name="prod_id" value="{{ product.id }}">
+                            <button type="submit" class="btn btn-sm border">
+                                <i class="far fa-heart"></i> Add to wishlist
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+                <ul class="list-unstyled small d-inline-block">
+                    <li class="px-3 py-2 mb-1 bg-white">
+                        <strong class="text-uppercase">SKU:</strong><span class="ml-2 text-muted">{{ product.sku }}</span>
+                    </li>
+                    <li class="px-3 py-2 mt-3 mb-1 bg-white text-muted">
+                        <a href="{% url 'category-products' gift_product.category.slug %}">View Category</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}

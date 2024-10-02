@@ -1,0 +1,307 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content%}
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap");
+
+      :root {
+        --primary-clr: #000000;
+        --white: #e5d8ff;
+        --text-clr: #363333;
+        --tabs-list-bg-clr: #e4ffff;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        list-style: none;
+        font-family: "Open Sans", sans-serif;
+      }
+
+      body {
+        background: var(--primary-clr);
+        font-size: 12px;
+        color: var(--text-clr);
+      }
+
+      .flex_align_justify {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .wrapper {
+        min-height: 100vh;
+        width: 100%;
+      }
+
+      .tc_wrap {
+        width: 65%;
+        height: 70vh;
+        background: var(--white);
+        display: flex;
+        border-radius: 3px;
+        overflow: hidden;
+      }
+
+      .tc_wrap .tabs_list {
+        width: 200px;
+        background: var(--tabs-list-bg-clr);
+        height: 100%;
+      }
+
+      .tc_wrap .tabs_content {
+        width: calc(100% - 200px);
+        padding: 0 10px 0 20px;
+        height: 100%;
+      }
+
+      .tc_wrap .tabs_content .tab_head,
+      .tc_wrap .tabs_content .tab_foot {
+        color: var(--primary-clr);
+        padding: 25px 0;
+        height: 70px;
+      }
+
+      .tc_wrap .tabs_content .tab_head {
+        text-align: center;
+      }
+
+      .tc_wrap .tabs_content .tab_body {
+        height: calc(100% - 140px);
+        overflow: auto;
+      }
+
+      .tc_wrap .tabs_list ul {
+        padding: 70px 20px;
+        text-align: right;
+      }
+
+      .tc_wrap .tabs_list ul li {
+        padding: 10px 0;
+        position: relative;
+        margin-bottom: 3px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: all 0.5s ease;
+      }
+
+      .tc_wrap .tabs_list ul li:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: -20px;
+        width: 2px;
+        height: 100%;
+        background: var(--primary-clr);
+        opacity: 0;
+        transition: all 0.5s ease;
+      }
+
+      .tc_wrap .tabs_list ul li.active,
+      .tc_wrap .tabs_list ul li:hover {
+        color: var(--primary-clr);
+      }
+
+      .tc_wrap .tabs_list ul li.active:before {
+        opacity: 1;
+      }
+
+      .tc_wrap .tabs_content .tab_body .tab_item h3 {
+        padding-top: 10px;
+        margin-bottom: 10px;
+        color: var(--primary-clr);
+      }
+
+      .tc_wrap .tabs_content .tab_body .tab_item p {
+        margin-bottom: 20px;
+      }
+
+      .tc_wrap .tabs_content .tab_body .tab_item.active {
+        display: block !important;
+      }
+
+      .tc_wrap .tabs_content .tab_foot button {
+        width: 125px;
+        padding: 5px 10px;
+        background: transparent;
+        border: 1px solid;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: all 0.5s ease;
+      }
+
+      .tc_wrap .tabs_content .tab_foot button.decline {
+        margin-right: 15px;
+        border-color: var(--tabs-list-bg-clr);
+        color: var(--tabs-list-bg-clr);
+      }
+
+      .tc_wrap .tabs_content .tab_foot button.agree {
+        background: var(--primary-clr);
+        border-color: var(--primary-clr);
+        color: var(--white);
+      }
+
+      .tc_wrap .tabs_content .tab_foot button.decline:hover {
+        background: var(--tabs-list-bg-clr);
+        color: var(--white);
+      }
+
+      /* Responsive styles */
+      @media screen and (max-width: 768px) {
+        .tc_wrap {
+          flex-direction: column;
+          width: 90%;
+          height: auto;
+        }
+
+        .tc_wrap .tabs_list {
+          width: 100%;
+          height: auto;
+        }
+
+        .tc_wrap .tabs_content {
+          width: 100%;
+          padding: 10px;
+          height: auto;
+        }
+
+        .tc_wrap .tabs_list ul {
+          display: flex;
+          flex-direction: column;
+          padding: 20px;
+          text-align: left;
+        }
+
+        .tc_wrap .tabs_list ul li {
+          margin-bottom: 10px;
+        }
+
+        .tc_wrap .tabs_content .tab_body {
+          height: auto;
+          overflow: visible;
+        }
+
+        .tc_wrap .tabs_content .tab_foot {
+          text-align: center;
+        }
+
+        .tc_wrap .tabs_content .tab_foot button {
+          margin: 10px 0;
+        }
+      }
+
+      @media screen and (max-width: 480px) {
+        .tc_wrap {
+          width: 100%;
+        }
+
+        .tc_wrap .tabs_content .tab_head h2 {
+          font-size: 18px;
+        }
+
+        .tc_wrap .tabs_content .tab_body p {
+          font-size: 12px;
+        }
+      }
+    </style>
+</head>
+<body>
+
+<div class="wrapper flex_align_justify">
+   <div class="tc_wrap">
+       <div class="tabs_list">
+         <ul>
+           <li data-tc="tab_item_1" class="active">Terms of use</li>
+           <li data-tc="tab_item_2">Intellectual property rights</li>
+           <li data-tc="tab_item_3">Prohibited activities</li>
+           <li data-tc="tab_item_4">Copyright Notice</li>
+           <li data-tc="tab_item_5">Governing law</li>
+         </ul>
+       </div>
+       <div class="tabs_content">
+          <div class="tab_head">
+            <h2>Terms & Conditions</h2>
+          </div>
+          <div class="tab_body">
+            <div class="tab_item tab_item_1">
+                <h3>Terms of use</h3>
+                <p>Subbiah Jewellery has created its various Platforms to provide information about its company and products for your personal use. While considerable effort has been made to ensure that the visual representations of Subbiah Jewellery products displayed on the platforms are representative of the color, design, and style of the original products, slight variations, distortions, and/or differences may be apparent when compared to the original product. This may be due to technical issues such as your browser or computer settings. Accordingly, Subbiah Jewellery cannot be held liable for any apparent differences in the product images represented on the Platforms and the original products. We strongly advise you to visit one of our boutiques or authorized retailers prior to making a purchase online or by phone.</p>
+              <p>You may download one computer copy or print one copy of the material made available to you via the Platforms,for your own non-commercial, educational, private, or domestic use only, provided that proprietary notices, in particular intellectual property notices such as copyright©, trademark™, are preserved intact and are not modified, deleted, or changed. Unless otherwise stated, you should assume that everything that you see or read on the Platforms (such as images, photographs, including any person represented in the photographs, illustrations, icons, texts, video clips, music, written, and other materials) ("Subbiah Jewellery Material") are protected by legislation such as copyright, designs, and trademark legislation and under international treaty provisions and national laws worldwide.</p>
+              <p>You are not authorized to sell, reproduce, distribute, communicate, modify, display, publicly perform, report, or otherwise prepare derivative or second-hand works based on or use any Subbiah Jewellery Material in any way for any public or commercial purposes. Furthermore, Subbiah Jewellery Material may not be displayed or communicated on any other platform, in a networked computer environment, or on any other digital platform for any purpose whatsoever. In the event of breach of any of these Terms of Use, your permission to use Subbiah Jewellery Material will automatically terminate and any copies made of Subbiah Jewellery Material must be immediately destroyed. Any unauthorized use of Subbiah Jewellery Material may infringe copyright laws, trademark laws, the laws of privacy and publicity, and communications regulations and statutes</p>
+            </div>
+            
+            <div class="tab_item tab_item_2" style="display: none;">
+              <h3>Use of Materials on the Platforms</h3>
+            <p>At Subbiah Jewellery, we recognize the immense value of intellectual property (IP) and are committed to protecting our own IP assets, as well as respecting the IP rights of others. This section outlines the principles, rights, and obligations related to intellectual property as they pertain to the use of our website, products, and services. By accessing and using our platform, you agree to comply with the following provisions on intellectual property rights:</p>
+            <p>Ownership of Intellectual Property:-
+              <br>All content and materials available on the Subbiah Jewellery website, including but not limited to text, graphics, logos, icons, images, audio clips, video clips, digital downloads, data compilations, software, and any other form of content, are the exclusive property of Subbiah Jewellery or its licensors. These materials are protected by copyright, trademark, and other intellectual property laws, both in India and internationally. Unauthorized use of these materials is strictly prohibited and may result in legal action.<br><br>
+              Trademarks:- <br>
+              The trademarks, service marks, logos, and trade names used and displayed on our website are registered and unregistered trademarks of Subbiah Jewellery and its affiliates. These trademarks are protected under trademark laws and may not be used in connection with any product or service that is not provided by Subbiah Jewellery, in any manner that is likely to cause confusion among customers, or in any way that disparages or discredits Subbiah Jewellery. All other trademarks not owned by Subbiah Jewellery that appear on our platform are the property of their respective owners. <br> <br>
+              Copyright:- <br>
+
+              All content on the Subbiah Jewellery website is protected by copyright laws. This includes original works such as articles, blog posts, product descriptions, images, and videos created by or for Subbiah Jewellery. Users are granted a limited, non-exclusive, non-transferable, and revocable license to access and use the content for personal, non-commercial purposes only. Any reproduction, distribution, modification, or public display of copyrighted content without the prior written permission of Subbiah Jewellery is prohibited.
+          </p>
+          </div>
+
+
+          <div class="tab_item tab_item_3"  style="display: none;">
+              <h3>Prohibited activities</h3>
+              <p>As a user of the Subbiah Jewellery website and its associated services, you are expected to engage in lawful and respectful behavior at all times. To protect the integrity and security of our platform, as well as the interests of all our users, we have established a set of activities that are strictly prohibited. Violation of these prohibitions may result in immediate termination of your account, and in severe cases, may also lead to legal action. By accessing and using our services, you agree to comply with the following prohibitions</p>
+            <p>Illegal Activities:- <br>
+              Users must not engage in any illegal activities while using our platform. This includes but is not limited to committing fraud, identity theft, money laundering, or any form of cybercrime. Users must comply with all applicable laws and regulations, including but not limited to intellectual property laws, privacy laws, and consumer protection laws. Any attempt to use our platform for illegal purposes will be reported to the appropriate authorities.<br><br>
+          Unauthorized Access:-
+              <br>You are prohibited from attempting to gain unauthorized access to any portion of the Subbiah Jewellery website, or any other systems or networks connected to the platform. This includes, but is not limited to, hacking, password mining, or any other means of circumventing security measures. Unauthorized access also includes attempting to gain access to other users' accounts or personal information without their permission. <br> <br>
+              Commercial Activities:- <br>
+            Unauthorized commercial activities on our platform are strictly prohibited. This includes, but is not limited to, the sale of goods or services, advertising, or any form of solicitation without prior permission from Subbiah Jewellery. Users are also prohibited from using our platform to conduct or promote any business activities that are illegal or unethical. 
+          </p>
+          </div>
+
+
+          <div class="tab_item tab_item_4"  style="display: none;">
+              <h3>Copyright Notice</h3>
+            <p>All content (including Subbiah Jewellery Materials) on the Platforms are either Copyright © Subbiah Jewellery or are licensed for use by Subbiah Jewellery. All rights are reserved. Please refer to the section above on Use of Materials on the Platforms.</p>
+            <p>You may not, under any circumstances, copy, reproduce, republish, upload, post, transmit, distribute, or create derivative works from the material on this website without the express written permission of Subbiah Jewellery. Unauthorized use of this material may violate copyright, trademark, and other applicable laws, and could result in criminal or civil penalties.</p>
+          </div>
+
+
+          <div class="tab_item tab_item_5"  style="display: none;">
+              <h3>Governing law</h3>
+            <p>These terms and conditions are governed by and construed in accordance with the laws of India. Any disputes arising out of or relating to these terms and conditions will be subject to the exclusive jurisdiction of the courts located in Trivandrum, Kerala.</p>
+            <p>If any provision of these terms and conditions is found to be unlawful, void, or for any reason unenforceable, that provision shall be deemed severable from these terms and conditions and shall not affect the validity and enforceability of any remaining provisions</p>
+          </div>
+        </div>
+     </div>
+ </div>
+</div>
+            
+          </div>
+       </div>
+   </div>
+</div>
+
+<script type="text/javascript">
+  var tabLists = document.querySelectorAll(".tabs_list ul li");
+  var tabItems = document.querySelectorAll(".tab_item");
+
+  tabLists.forEach(function (el) {
+    el.addEventListener("click", function () {
+      document.querySelector(".tabs_list ul li.active").classList.remove("active");
+      el.classList.add("active");
+
+      var tabAttr = el.getAttribute("data-tc");
+
+      tabItems.forEach(function (tabEl) {
+        tabEl.style.display = "none";
+      });
+
+      document.querySelector("." + tabAttr).style.display = "block";
+    });
+  });
+</script>
+
+</body>
+</html>
+{% endblock %}      

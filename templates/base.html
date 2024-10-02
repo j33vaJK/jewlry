@@ -1,0 +1,235 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>
+        {% block metatitle %}Subbiah Jewellery{% endblock metatitle %}
+    </title>
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="robots" content="all,follow"/>
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+
+    <!-- Bootstrap CSS-->
+    <link
+            rel="stylesheet"
+            href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}"
+    />
+    <!-- Lightbox-->
+    <link
+            rel="stylesheet"
+            href="{% static 'vendor/lightbox2/css/lightbox.min.css' %}"
+    />
+    <!-- Range slider-->
+    <link
+            rel="stylesheet"
+            href="{% static 'vendor/nouislider/nouislider.min.css' %}"
+    />
+    <!-- Bootstrap select-->
+    <link
+            rel="stylesheet"
+            href="{% static 'vendor/bootstrap-select/css/bootstrap-select.min.css' %}"
+    />
+    <!-- Owl Carousel-->
+    <link
+            rel="stylesheet"
+            href="{% static 'vendor/owl.carousel2/assets/owl.carousel.min.css' %}"
+    />
+    <link
+            rel="stylesheet"
+            href="{% static 'vendor/owl.carousel2/assets/owl.theme.default.css' %}"
+    />
+    <!-- Google fonts-->
+    <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;700&amp;display=swap"
+    />
+    <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Martel+Sans:wght@300;400;800&amp;display=swap"
+    />
+    <!-- theme stylesheet-->
+    <link
+            rel="stylesheet"
+            href="{% static 'css/style.default.css' %}"
+            id="theme-stylesheet"
+    />
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}"/>
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="{% static 'images/subbiah_logo.png' %}"/>
+
+    <!-- Tweaks for older IEs-->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script
+    ><![endif]-->
+    <!-- Font Awesome -->
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+            integrity="sha512-lb8sHUiXg2L6bPml5G5UMhS1mXwJXzDrtf5DKWiVqjSEAtmZbsizA1zJKhu2MO+5X7cCYNn0MeU0ZrSHwB6WnA=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
+
+    <!-- Google Fonts -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+          rel="stylesheet">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+        function message(){
+        alert("The message submitted successfully");
+        }
+    </script>
+    <style>
+        /* searchbar icon css */
+        .search-container {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        border-radius: 30px;
+        padding: 5px;
+        background-color: #1c2a30;
+        width: 250px;
+        margin-right: 35px;
+    }
+    
+    @media only screen and (max-width: 1024px) {
+        .search-container{
+            display: none;
+        }
+    }
+
+    .search-bar {
+        border: none;
+        padding: 5px;
+        border-radius: 30px 0 0 30px;
+        outline: none;
+        font-size: 16px;
+        width: 90%;
+    }
+    
+    .search-button {
+        background-color: transparent;
+        color: white;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        font-size: 18px;
+    }
+    
+    .search-button i {
+        color: white;
+    }
+        .carousel-control-prev-icon{
+          background-color:black;
+          padding:20px;
+          border-radius:50%;
+        }
+        .carousel-control-next-icon{
+          background-color:black;
+          padding:20px;
+          border-radius:50%;
+        }
+        body {
+            font-family: "Mulish", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: <weight>;
+            font-style: normal;
+        }
+        .carousels {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .profile {
+            text-align: center;
+            margin: 10px;
+        }
+
+        .profile img {
+            border: 2px solid #ce8435;
+            border-radius: 50%;
+            max-width: 140px;
+            max-height: 140px;
+            object-fit: cover;
+        }
+
+
+
+        @media (min-width: 600px) {
+            .profile img {
+                width: 15vw;
+                height: 15vw;
+            }
+        }
+
+
+
+            @media (min-width: 768px) {
+                .profile img {
+                    width: 10vw;
+                    height: 10vw;
+                }
+
+
+            }
+
+
+            @media (min-width: 992px) {
+                .profile img {
+                    width: 9vw;
+                    height: 9vw;
+                }
+
+            }
+            .custom-product {
+                border: 1px solid #ddd; 
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                padding: 15px; 
+                border-radius: 5px;
+                background-color: #fff; 
+                transition: box-shadow 0.3s ease; 
+            }
+            
+            .custom-product:hover {
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+            }
+           
+            .btn-dark-moon {
+                background: #141E30;  /* fallback for old browsers */
+                background: -webkit-linear-gradient(to right, #243B55, #141E30);  /* Chrome 10-25, Safari 5.1-6 */
+                background: linear-gradient(to right, #243B55, #141E30); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+                color: #fff;
+                border: 3px solid #eee;
+                
+            }
+
+
+    </style>
+</head>
+<body>
+<div class="page-holder">
+    {% include 'navbar.html' %}
+    {% include 'navebar_2.html' %} {% block content %} {% endblock content %} {% block payment-gateway %}
+    {% endblock payment-gateway %}
+    {% include 'footer.html' %} {% include 'scripts.html' %}
+</div>
+</body>
+</html>
